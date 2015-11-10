@@ -107,6 +107,10 @@ void DrawBox(){
 
 	glUseProgram(programID);
 
+	M = glm::translate(glm::vec3(cos(alpha),sin(alpha),cos(alpha)))*glm::rotate(alpha, glm::vec3(1.0f,1.0f,1.0f));
+
+	alpha += 0.1;
+
 	MVP = VP*M;
 	glUniformMatrix4fv(MVP_MatrixID, 1, GL_FALSE, &MVP[0][0]);
 	glEnableVertexAttribArray(0);
