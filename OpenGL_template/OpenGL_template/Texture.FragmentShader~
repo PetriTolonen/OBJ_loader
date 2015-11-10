@@ -1,0 +1,34 @@
+#version 330 core
+
+in vec2 UV;
+in vec3 fragmentColor; // Interpolated values from the vertex shaders
+uniform vec2 wh;       // Screen width & height
+uniform sampler2D myTextureSampler; // Texture data
+/*system inputs
+in vec4 gl_FragCoord;
+in bool gl_FrontFacing;
+in vec2 gl_PointCoord;
+*/
+out vec3 color; // Output data
+
+float rand(vec4 pos) {
+  return sin(2374623.123*(pos.x+pos.y*pos.z+pos.z+1.0))*cos(38489*pos.y+728346*pos.x);
+}
+
+void main(){
+  float x=gl_FragCoord.x-0.5*wh.x;
+  float y=gl_FragCoord.y-0.5*wh.y;
+  float r=sqrt(x*x+y*y);
+
+  if(r<(0.9+0.1*rand(gl_FragCoord))*200*wh.x/1024.0) {
+    //Color image
+    color = fragmentColor;
+  } else {
+    //Grayscale image
+    color =  vec3(0.21*fragmentColor[0] + 0.72*fragmentColor[1] + 0.07*fragmentColor[2]);
+  }
+
+  color*=0.5*(0.9+0.1*rand(gl_FragCoord))+0.5*texture(myTextureSampler, UV).rgb;
+ //Z-value image
+ //color = vec3(gl_FragCoord.z); //Plot z-values
+}
