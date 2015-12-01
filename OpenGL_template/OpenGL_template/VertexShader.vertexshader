@@ -2,13 +2,13 @@
 
 //Defined also in vertexshader.h
 #define VERTEX_POSITION 0
-#define VERTEX_COLOR 1
+#define TEXTURE_DATA 1
 
 // Input vertex data, different for all executions of this shader.
 layout(location = VERTEX_POSITION) in vec3 vertexPosition_modelspace;
-layout(location = VERTEX_COLOR) in vec4 vertexColor;
+layout(location = TEXTURE_DATA) in vec2 vertexUV;
 
-out vec4 fragmentColor;
+out vec2 UV;
 /* system outputs
 vec4 gl_Position;
 float gl_PointSize;
@@ -18,5 +18,5 @@ uniform mat4 MVP;
 
 void main() {
 	gl_Position =  MVP * vec4(vertexPosition_modelspace,1);
-	fragmentColor = vertexColor;
+	UV = vertexUV;
 }

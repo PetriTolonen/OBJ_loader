@@ -1,7 +1,8 @@
 #version 330 core
 
-in vec4 fragmentColor;
-uniform vec2 wh;
+in vec2 UV;
+
+uniform sampler2D myTextureSampler;
 /*system inputs
 in vec4 gl_FragCoord;
 in bool gl_FrontFacing;
@@ -10,7 +11,7 @@ in vec2 gl_PointCoord;
 out vec4 color; // Output data
 
 void main(){
-  color=fragmentColor;
+  color=texture(myTextureSampler, UV);
 
   color.a = 1.0;
 }
