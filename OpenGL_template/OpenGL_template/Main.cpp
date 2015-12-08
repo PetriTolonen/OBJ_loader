@@ -43,10 +43,12 @@ namespace {
 	GLuint MVP_MatrixID;
 	GLuint VP_MatrixID;
 	GLuint M_MatrixID;
-	GLuint TextureID;
+	GLuint Normal_mapID;
+	GLuint Diffuse_mapID;
 	GLuint colorbuffer;
 	GLuint uvbuffer;
-	GLuint Texture;
+	GLuint normal_map;
+	GLuint diffuse_map;
 	int numberofind = 0;
 
 	glm::mat4 V;
@@ -65,7 +67,7 @@ void InitBox(){
 	VP_MatrixID = glGetUniformLocation(programID, "VP");
 	M_MatrixID = glGetUniformLocation(programID, "M");
 	
-	res.loadOBJ("ballll.obj", vertices, uvs, normals);
+	res.loadOBJ("rockwall.obj", vertices, uvs, normals);
 
 
 	glGenBuffers(1, &vertexbuffer);
@@ -81,9 +83,11 @@ void InitBox(){
 	glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
 	glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(glm::vec3), &normals[0], GL_STATIC_DRAW);
 
-	TextureID = glGetUniformLocation(programID, "myTextureSampler");
-	
-	Texture = loadBMP_custom("./ballnormal.bmp");
+	Normal_mapID = glGetUniformLocation(programID, "rockwall_normal");	
+	normal_map = loadBMP_custom("./rockwall_normal_map.bmp");
+
+	Diffuse_mapID = glGetUniformLocation(programID, "rockwall_diffuse");
+	diffuse_map = loadBMP_custom("./rockwall_diffuse_map.bmp");
 }
 void DrawBox(){
 	glEnable(GL_BLEND);
@@ -91,12 +95,19 @@ void DrawBox(){
 	glUseProgram(programID);
 
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, Texture);
+	glBindTexture(GL_TEXTURE_2D, normal_map);
 	// Set our "myTextureSampler" sampler to user Texture Unit 0
-	glUniform1i(TextureID, 0);
+	glUniform1i(Normal_mapID, 0);
+
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, diffuse_map);
+	// Set our "myTextureSampler" sampler to user Texture Unit 0
+	glUniform1i(Diffuse_mapID, 1);
 
 	M = glm::translate(glm::vec3(cos(alpha),0.0f,0.0f))*glm::rotate(alpha, glm::vec3(1.0f,0.0f,0.0f));
 	alpha += 0.008f;
+
+	//M = glm::translate(glm::vec3(0.0f, 0.0f, 0.0f))*glm::rotate(1.5707963267f, glm::vec3(1.0f, 0.0f, 0.0f));
 
 	MVP = VP * M;
 	glUniformMatrix4fv(MVP_MatrixID, 1, GL_FALSE, &MVP[0][0]);
