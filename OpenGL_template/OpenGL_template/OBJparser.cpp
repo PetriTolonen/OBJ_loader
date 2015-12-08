@@ -10,7 +10,7 @@ OBJparser::~OBJparser()
 {
 }
 
-bool OBJparser::loadOBJ(const char * path, std::vector<glm::vec3> &out_vertices, std::vector<glm::vec2> &out_uvs, std::vector<glm::vec3> &out_normals)
+bool OBJparser::loadOBJ(const char * path, std::vector<glm::vec3> &out_vertices, std::vector<glm::vec2> &out_uvs, std::vector<glm::vec3> &out_normals, std::vector<glm::vec3> &out_tangents, std::vector<glm::vec3> &out_bitangents)
 {
 	FILE * file = fopen(path, "r");
 	if (file == NULL)
@@ -88,5 +88,84 @@ bool OBJparser::loadOBJ(const char * path, std::vector<glm::vec3> &out_vertices,
 		unsigned int normalIndex = normalIndices[i];
 		glm::vec3 normal = temp_normals[normalIndex - 1];
 		out_normals.push_back(normal);
+	}
+
+	computeTangentBasis(vertexIndices, out_vertices, out_uvs, out_normals, out_tangents, out_bitangents);
+}
+
+//TODO: fix indexin.:
+void OBJparser::computeTangentBasis(
+	// inputs
+	std::vector<unsigned int>& indices,
+	std::vector<glm::vec3> & vertices,
+	std::vector<glm::vec2> & uvs,
+	std::vector<glm::vec3> & normals,
+	// outputs
+	std::vector<glm::vec3> & tangents,
+	std::vector<glm::vec3> & bitangents
+	){
+
+	tangents.clear();
+	bitangents.clear();
+
+	tangents.resize(indices.size());
+	bitangents.resize(indices.size());
+
+	for (unsigned int i = 0; i<indices.size(); i += 3)
+	{
+		// Shortcuts for vertices
+		int index0 = indices[i];
+		int index1 = indices[i + 1];
+		int index2 = indices[i + 2];
+
+		glm::vec3 & v0 = vertices[index0];
+		glm::vec3 & v1 = vertices[index1];
+		glm::vec3 & v2 = vertices[index2];
+
+		// Shortcuts for UVs
+		glm::vec2 & uv0 = uvs[index0];
+		glm::vec2 & uv1 = uvs[index1];
+		glm::vec2 & uv2 = uvs[index2];
+
+		// Edges of the triangle : postion delta
+		glm::vec3 deltaPos1 = v1 - v0;
+		glm::vec3 deltaPos2 = v2 - v0;
+
+		deltaPos1 = glm::vec3(deltaPos1);
+		deltaPos2 = glm::vec3(deltaPos2);
+
+		// UV delta
+		glm::vec2 deltaUV1 = uv1 - uv0;
+		glm::vec2 deltaUV2 = uv2 - uv0;
+
+		float r = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV1.y * deltaUV2.x);
+		glm::vec3 tangent = (deltaPos1 * deltaUV2.y - deltaPos2 * deltaUV1.y)*r;
+		glm::vec3 bitangent = (deltaPos2 * deltaUV1.x - deltaPos1 * deltaUV2.x)*r;
+
+		//TODO: fix indexin.
+		// Set the same tangent for all three vertices of the triangle.
+		tangents[i] = normalize(tangent);
+		tangents[i+1] = normalize(tangent);
+		tangents[i+2] = normalize(tangent);
+
+		// Same thing for bitangents
+		bitangents[i] = normalize(bitangent);
+		bitangents[i+1] = normalize(bitangent);
+		bitangents[i+2] = normalize(bitangent);
+	}
+
+	for (unsigned int i = 0; i<vertices.size(); i += 1)
+	{
+		glm::vec3 & n = normals[i];
+		glm::vec3 & t = tangents[i];
+		glm::vec3 & b = bitangents[i];
+
+		// Gram-Schmidt orthogonalize
+		t = t - n * glm::dot(n, t);
+
+		// Calculate handedness
+		if (glm::dot(glm::cross(n, t), b) < 0.0f){
+			t = t * -1.0f;
+		}
 	}
 }

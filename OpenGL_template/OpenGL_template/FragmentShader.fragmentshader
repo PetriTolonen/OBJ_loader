@@ -2,6 +2,9 @@
 
 in vec3 NORMALS;
 in vec2 UV;
+in mat3 TBN;
+in vec3 TangentLightPos;
+in vec3 TangentFragPos;
 
 uniform sampler2D rockwall_normal;
 uniform sampler2D rockwall_diffuse;
@@ -14,20 +17,19 @@ in vec2 gl_PointCoord;
 out vec4 FragColor; // Output data
 
 void main(){
-  //TODO: normal map from texture. http://www.terathon.com/code/tangent.html
   vec3 normal = normalize(NORMALS);
   normal = texture(rockwall_normal, UV).rgb;
   normal = normalize(normal * 2.0 - 1.0);
 
   vec3 color = texture(rockwall_diffuse, UV).rgb;
-  vec3 ambient = 0.1*color;
+  vec3 ambient = 0.2*color;
 
-  vec3 eyeSpaceLigthDirection = vec3(1.0,1.0,1.0);
+  vec3 ligthDirection = TangentLightPos - TangentFragPos;
 
-  float diff = max(0.0, dot(normalize(normal), normalize(eyeSpaceLigthDirection)));
+  float diff = max(0.0, dot(normalize(normal), normalize(ligthDirection)));
 
   vec3 diffuse = diff * color;
 
-  FragColor = vec4(diffuse, 1.0);
+  FragColor = vec4(diffuse + ambient, 1.0);
   FragColor.a = 1.0;
 }

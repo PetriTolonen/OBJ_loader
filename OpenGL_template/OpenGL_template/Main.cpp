@@ -20,6 +20,10 @@ namespace {
 	GLuint textureProgramID;
 	GLuint vertexbuffer;
 	GLuint normalbuffer;
+
+	GLuint tangentbuffer;
+	GLuint bitangentbuffer;
+
 	GLuint VertexArrayID;
 	GLuint indexbuffer;
 	GLFWwindow* window;
@@ -34,6 +38,9 @@ namespace {
 	std::vector<glm::vec2> uvs;
 	std::vector<glm::vec3> normals;
 
+	std::vector<glm::vec3> tangents;
+	std::vector<glm::vec3> bitangents;
+
 	//
 	GLuint texturevertexbuffer;
 	GLuint textureVertexArrayID;
@@ -43,6 +50,7 @@ namespace {
 	GLuint MVP_MatrixID;
 	GLuint VP_MatrixID;
 	GLuint M_MatrixID;
+	GLuint L_VecID;
 	GLuint Normal_mapID;
 	GLuint Diffuse_mapID;
 	GLuint colorbuffer;
@@ -54,6 +62,7 @@ namespace {
 	glm::mat4 V;
 	glm::mat4 P;
 	glm::mat4 VP;
+	glm::vec3 L;
 
 	OBJparser res;
 };
@@ -66,13 +75,16 @@ void InitBox(){
 	MVP_MatrixID = glGetUniformLocation(programID, "MVP");
 	VP_MatrixID = glGetUniformLocation(programID, "VP");
 	M_MatrixID = glGetUniformLocation(programID, "M");
+	L_VecID = glGetUniformLocation(programID, "L");
 	
-	res.loadOBJ("rockwall.obj", vertices, uvs, normals);
-
+	res.loadOBJ("rockwall.obj", vertices, uvs, normals, tangents, bitangents);
 
 	glGenBuffers(1, &vertexbuffer);
 	glGenBuffers(1, &uvbuffer);
 	glGenBuffers(1, &normalbuffer);
+
+	glGenBuffers(1, &tangentbuffer);
+	glGenBuffers(1, &bitangentbuffer);
 
 	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
@@ -82,6 +94,12 @@ void InitBox(){
 
 	glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
 	glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(glm::vec3), &normals[0], GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ARRAY_BUFFER, tangentbuffer);
+	glBufferData(GL_ARRAY_BUFFER, tangents.size() * sizeof(glm::vec3), &tangents[0], GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ARRAY_BUFFER, bitangentbuffer);
+	glBufferData(GL_ARRAY_BUFFER, bitangents.size() * sizeof(glm::vec3), &bitangents[0], GL_STATIC_DRAW);
 
 	Normal_mapID = glGetUniformLocation(programID, "rockwall_normal");	
 	normal_map = loadBMP_custom("./rockwall_normal_map.bmp");
@@ -104,15 +122,16 @@ void DrawBox(){
 	// Set our "myTextureSampler" sampler to user Texture Unit 0
 	glUniform1i(Diffuse_mapID, 1);
 
-	M = glm::translate(glm::vec3(cos(alpha),0.0f,0.0f))*glm::rotate(alpha, glm::vec3(1.0f,0.0f,0.0f));
+	//M = glm::translate(glm::vec3(cos(alpha),0.0f,0.0f))*glm::rotate(alpha, glm::vec3(1.0f,0.0f,0.0f));
 	alpha += 0.008f;
 
-	//M = glm::translate(glm::vec3(0.0f, 0.0f, 0.0f))*glm::rotate(1.5707963267f, glm::vec3(1.0f, 0.0f, 0.0f));
+	M = glm::translate(glm::vec3(0.0f, 0.0f, 0.0f))*glm::rotate(1.5707963267f, glm::vec3(1.0f, 0.0f, 0.0f));
 
 	MVP = VP * M;
 	glUniformMatrix4fv(MVP_MatrixID, 1, GL_FALSE, &MVP[0][0]);
-	M = M;
 	glUniformMatrix4fv(M_MatrixID, 1, GL_FALSE, &M[0][0]);
+	L = glm::vec3(5 * glm::cos(alpha), 5 * glm::sin(alpha), 3.0f); //Light position
+	glUniform3fv(L_VecID, 1, &L[0]);
 
 	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
@@ -139,7 +158,29 @@ void DrawBox(){
 	glEnableVertexAttribArray(2);
 	glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
 	glVertexAttribPointer(
-		NORMAL_BUFFER,                               // attribute. No particular reason for 1, but must match the layout in the shader.
+		NORMAL_DATA,                               // attribute. No particular reason for 1, but must match the layout in the shader.
+		3,
+		GL_FLOAT,                         // type
+		GL_FALSE,                         // normalized?
+		0,                                // stride
+		(void*)0                          // array buffer offset
+		);
+
+	glEnableVertexAttribArray(3);
+	glBindBuffer(GL_ARRAY_BUFFER, tangentbuffer);
+	glVertexAttribPointer(
+		TANGENT_DATA,                               // attribute. No particular reason for 1, but must match the layout in the shader.
+		3,
+		GL_FLOAT,                         // type
+		GL_FALSE,                         // normalized?
+		0,                                // stride
+		(void*)0                          // array buffer offset
+		);
+
+	glEnableVertexAttribArray(4);
+	glBindBuffer(GL_ARRAY_BUFFER, bitangentbuffer);
+	glVertexAttribPointer(
+		BITANGENT_DATA,                               // attribute. No particular reason for 1, but must match the layout in the shader.
 		3,
 		GL_FLOAT,                         // type
 		GL_FALSE,                         // normalized?
@@ -192,7 +233,6 @@ void Render(void) {
 	//alpha += 0.01;
 
 	DrawBox();
-	//DrawOctagon();
 
 	glfwSwapBuffers(window);
 }
