@@ -89,7 +89,7 @@ void DrawBox(){
 	M = glm::translate(glm::vec3(cos(alpha), 0.0f, 0.0f));
 	alpha += 0.1;
 
-	MVP = VP/**M*/;
+	MVP = VP*M;
 	glUniformMatrix4fv(MVP_MatrixID, 1, GL_FALSE, &MVP[0][0]);
 	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
