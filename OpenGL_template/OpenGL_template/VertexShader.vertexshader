@@ -3,20 +3,28 @@
 //Defined also in vertexshader.h
 #define VERTEX_POSITION 0
 #define TEXTURE_DATA 1
+#define NORMAL_BUFFER 2
 
 // Input vertex data, different for all executions of this shader.
 layout(location = VERTEX_POSITION) in vec3 vertexPosition_modelspace;
 layout(location = TEXTURE_DATA) in vec2 vertexUV;
+layout(location = NORMAL_BUFFER) in vec3 normals;
 
 out vec2 UV;
+out vec3 NORMALS;
 /* system outputs
 vec4 gl_Position;
 float gl_PointSize;
 float gl_ClipDistance[];
 */
 uniform mat4 MVP;
+uniform mat4 M;
+uniform mat3 normalMatrix;
 
-void main() {
+void main() {	
 	gl_Position =  MVP * vec4(vertexPosition_modelspace,1);
 	UV = vertexUV;
+
+	mat3 normalMatrix = transpose(inverse(mat3(M)));
+	NORMALS = normalize(normalMatrix * normals);
 }

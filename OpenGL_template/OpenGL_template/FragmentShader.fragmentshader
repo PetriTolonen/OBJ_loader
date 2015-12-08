@@ -1,5 +1,6 @@
 #version 330 core
 
+in vec3 NORMALS;
 in vec2 UV;
 
 uniform sampler2D myTextureSampler;
@@ -11,7 +12,8 @@ in vec2 gl_PointCoord;
 out vec4 color; // Output data
 
 void main(){
-  color=texture(myTextureSampler, UV);
-
+  vec3 eyeSpaceLigthDirection = vec3(0.0,1.0,1.0);
+  float diffuse = max(0.0, dot(normalize(NORMALS), normalize(eyeSpaceLigthDirection)));
+  color = vec4(vec3(0.5).xyz*diffuse, 1.0);
   color.a = 1.0;
 }

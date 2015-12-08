@@ -19,14 +19,20 @@ namespace {
 	GLuint programID;
 	GLuint textureProgramID;
 	GLuint vertexbuffer;
+	GLuint normalbuffer;
 	GLuint VertexArrayID;
 	GLuint indexbuffer;
 	GLFWwindow* window;
 	float alpha = glm::radians(0.0f);
 	glm::mat4 MVP(1.0);
+	glm::mat3 normalMatrix(1.0);
 	glm::mat4 M(1.0);
 	glm::vec2 wh;
 	GLuint wh_VectorID;
+
+	std::vector<glm::vec3> vertices;
+	std::vector<glm::vec2> uvs;
+	std::vector<glm::vec3> normals;
 
 	//
 	GLuint texturevertexbuffer;
@@ -35,6 +41,8 @@ namespace {
 	//
 
 	GLuint MVP_MatrixID;
+	GLuint VP_MatrixID;
+	GLuint M_MatrixID;
 	GLuint TextureID;
 	GLuint colorbuffer;
 	GLuint uvbuffer;
@@ -54,16 +62,15 @@ void InitBox(){
 
 	programID = LoadShaders("VertexShader.vertexshader", "FragmentShader.fragmentshader");
 	MVP_MatrixID = glGetUniformLocation(programID, "MVP");
+	VP_MatrixID = glGetUniformLocation(programID, "VP");
+	M_MatrixID = glGetUniformLocation(programID, "M");
 	
-	std::vector<glm::vec3> vertices;
-	std::vector<glm::vec2> uvs;
-	std::vector<glm::vec3> normals;
-	
-	res.loadOBJ("cube2.obj", vertices, uvs, normals);
+	res.loadOBJ("ballll.obj", vertices, uvs, normals);
 
 
 	glGenBuffers(1, &vertexbuffer);
 	glGenBuffers(1, &uvbuffer);
+	glGenBuffers(1, &normalbuffer);
 
 	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
@@ -71,9 +78,12 @@ void InitBox(){
 	glBindBuffer(GL_ARRAY_BUFFER, uvbuffer);
 	glBufferData(GL_ARRAY_BUFFER, uvs.size() * sizeof(glm::vec2), &uvs[0], GL_STATIC_DRAW);
 
+	glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
+	glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(glm::vec3), &normals[0], GL_STATIC_DRAW);
+
 	TextureID = glGetUniformLocation(programID, "myTextureSampler");
 	
-	Texture = loadBMP_custom("./uvtemplate.bmp");
+	Texture = loadBMP_custom("./ballnormal.bmp");
 }
 void DrawBox(){
 	glEnable(GL_BLEND);
@@ -85,12 +95,14 @@ void DrawBox(){
 	// Set our "myTextureSampler" sampler to user Texture Unit 0
 	glUniform1i(TextureID, 0);
 
-	//M = glm::translate(glm::vec3(cos(alpha),sin(alpha),cos(alpha)))*glm::rotate(alpha, glm::vec3(1.0f,1.0f,1.0f));
-	M = glm::translate(glm::vec3(cos(alpha), 0.0f, 0.0f));
-	alpha += 0.1;
+	M = glm::translate(glm::vec3(cos(alpha),0.0f,0.0f))*glm::rotate(alpha, glm::vec3(1.0f,0.0f,0.0f));
+	alpha += 0.008f;
 
-	MVP = VP*M;
+	MVP = VP * M;
 	glUniformMatrix4fv(MVP_MatrixID, 1, GL_FALSE, &MVP[0][0]);
+	M = M;
+	glUniformMatrix4fv(M_MatrixID, 1, GL_FALSE, &M[0][0]);
+
 	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
 	glVertexAttribPointer(
@@ -112,30 +124,53 @@ void DrawBox(){
 		0,                                // stride
 		(void*)0                          // array buffer offset
 		);
-	//glDrawElements(GL_TRIANGLES, numberofind, GL_UNSIGNED_BYTE, (GLvoid*)0);
 
-	glDrawArrays(GL_TRIANGLES, 0, 36);
+	glEnableVertexAttribArray(2);
+	glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
+	glVertexAttribPointer(
+		NORMAL_BUFFER,                               // attribute. No particular reason for 1, but must match the layout in the shader.
+		3,
+		GL_FLOAT,                         // type
+		GL_FALSE,                         // normalized?
+		0,                                // stride
+		(void*)0                          // array buffer offset
+		);
+
+	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
+	glDisableVertexAttribArray(2);
 }
+
+//void Initlamp()
+//{
+//	GLuint lightVAO;
+//	glGenVertexArrays(1, &lightVAO);
+//	glBindVertexArray(lightVAO);
+//	// We only need to bind to the VBO, the container's VBO's data already contains the correct data.
+//	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+//	// Set the vertex attributes (only position data for our lamp)
+//	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
+//	glEnableVertexAttribArray(0);
+//	glBindVertexArray(0);
+//}
 
 void Init(void) {
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glEnable(GL_DEPTH_TEST);
 
-	glm::vec3 cameraPos = glm::vec3(3.0f, 3.1f, 10.0f);
+	glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 10.0f);
 	glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 	glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
 	P = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.f);
-	//P = glm::ortho(-1, 1, -1, 1);
 	V = glm::lookAt(cameraPos, cameraPos+cameraFront, cameraUp);
 
 	VP = P*V;
 
 	InitBox();
-	//InitOctagon();
+	//Initlamp();
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }

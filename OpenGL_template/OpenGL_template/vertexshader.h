@@ -3,7 +3,7 @@
 
 //defined also in vertexshader
 #define VERTEX_POSITION 0
-#define VERTEX_COLOR 1
 #define TEXTURE_DATA 1
+#define NORMAL_BUFFER 2
 
 #endif

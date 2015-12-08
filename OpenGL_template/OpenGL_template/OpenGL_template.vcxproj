@@ -87,8 +87,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="common\controls.cpp" />
-    <ClCompile Include="common\objloader.cpp" />
-    <ClCompile Include="common\quaternion_utils.cpp" />
     <ClCompile Include="common\shader.cpp" />
     <ClCompile Include="common\tangentspace.cpp" />
     <ClCompile Include="common\text2D.cpp" />
