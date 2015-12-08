@@ -12,6 +12,7 @@ in vec2 gl_PointCoord;
 out vec4 color; // Output data
 
 void main(){
+//TODO: normal map from texture. http://www.terathon.com/code/tangent.html
   vec3 eyeSpaceLigthDirection = vec3(0.0,1.0,1.0);
   float diffuse = max(0.0, dot(normalize(NORMALS), normalize(eyeSpaceLigthDirection)));
   color = vec4(vec3(0.5).xyz*diffuse, 1.0);
