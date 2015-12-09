@@ -49,5 +49,11 @@
     <None Include="FragmentShader.fragmentshader">
       <Filter>Header Files</Filter>
     </None>
+    <None Include="Shadeless.fragmentshader">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Shadeless.vertexshader">
+      <Filter>Header Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

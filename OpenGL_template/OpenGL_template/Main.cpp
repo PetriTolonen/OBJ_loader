@@ -17,14 +17,15 @@
 
 namespace {
 	GLuint programID;
-	GLuint textureProgramID;
+	GLuint programID2;
 	GLuint vertexbuffer;
+	GLuint vertexbuffer2;
 	GLuint normalbuffer;
-
 	GLuint tangentbuffer;
 	GLuint bitangentbuffer;
 
-	GLuint VertexArrayID;
+	GLuint VertexArrayID; 
+	GLuint VertexArrayID2;
 	GLuint indexbuffer;
 	GLFWwindow* window;
 	float alpha = glm::radians(0.0f);
@@ -35,19 +36,15 @@ namespace {
 	GLuint wh_VectorID;
 
 	std::vector<glm::vec3> vertices;
+	std::vector<glm::vec3> vertices2;
 	std::vector<glm::vec2> uvs;
 	std::vector<glm::vec3> normals;
 
 	std::vector<glm::vec3> tangents;
 	std::vector<glm::vec3> bitangents;
 
-	//
-	GLuint texturevertexbuffer;
-	GLuint textureVertexArrayID;
-	GLuint textureindexbuffer;
-	//
-
 	GLuint MVP_MatrixID;
+	GLuint MVP_MatrixID2;
 	GLuint VP_MatrixID;
 	GLuint M_MatrixID;
 	GLuint L_VecID;
@@ -73,7 +70,6 @@ void InitBox(){
 
 	programID = LoadShaders("VertexShader.vertexshader", "FragmentShader.fragmentshader");
 	MVP_MatrixID = glGetUniformLocation(programID, "MVP");
-	VP_MatrixID = glGetUniformLocation(programID, "VP");
 	M_MatrixID = glGetUniformLocation(programID, "M");
 	L_VecID = glGetUniformLocation(programID, "L");
 	
@@ -107,30 +103,25 @@ void InitBox(){
 	Diffuse_mapID = glGetUniformLocation(programID, "rockwall_diffuse");
 	diffuse_map = loadBMP_custom("./rockwall_diffuse_map.bmp");
 }
-void DrawBox(){
+void DrawBox(float x, float y, float z, float rotation, glm::vec3 rotationaxel){
 	glEnable(GL_BLEND);
 
 	glUseProgram(programID);
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, normal_map);
-	// Set our "myTextureSampler" sampler to user Texture Unit 0
 	glUniform1i(Normal_mapID, 0);
 
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, diffuse_map);
-	// Set our "myTextureSampler" sampler to user Texture Unit 0
 	glUniform1i(Diffuse_mapID, 1);
 
-	M = glm::translate(glm::vec3(cos(alpha),0.0f,0.0f))*glm::rotate(alpha, glm::vec3(1.0f,0.0f,0.0f));
-	alpha += 0.008f;
-
-	//M = glm::translate(glm::vec3(0.0f, 0.0f, 0.0f))*glm::rotate(1.5707963267f, glm::vec3(1.0f, 0.0f, 0.0f));
+	M = glm::translate(glm::vec3(x, y, z))*glm::rotate(rotation, rotationaxel);
 
 	MVP = VP * M;
 	glUniformMatrix4fv(MVP_MatrixID, 1, GL_FALSE, &MVP[0][0]);
 	glUniformMatrix4fv(M_MatrixID, 1, GL_FALSE, &M[0][0]);
-	L = glm::vec3(5 * glm::cos(alpha), 5 * glm::sin(alpha), 3.0f); //Light position
+
 	glUniform3fv(L_VecID, 1, &L[0]);
 
 	glEnableVertexAttribArray(0);
@@ -195,24 +186,59 @@ void DrawBox(){
 	glDisableVertexAttribArray(2);
 }
 
-//void Initlamp()
-//{
-//	GLuint lightVAO;
-//	glGenVertexArrays(1, &lightVAO);
-//	glBindVertexArray(lightVAO);
-//	// We only need to bind to the VBO, the container's VBO's data already contains the correct data.
-//	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-//	// Set the vertex attributes (only position data for our lamp)
-//	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
-//	glEnableVertexAttribArray(0);
-//	glBindVertexArray(0);
-//}
+void InitLightPoint()
+{
+	glGenVertexArrays(1, &VertexArrayID2);
+	glBindVertexArray(VertexArrayID2);
+
+	res.loadOBJ("cube2.obj", vertices2, uvs, normals, tangents, bitangents);
+
+	glGenBuffers(1, &vertexbuffer2);
+
+	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer2);
+	glBufferData(GL_ARRAY_BUFFER, vertices2.size() * sizeof(glm::vec3), &vertices2[0], GL_STATIC_DRAW);
+
+	programID2 = LoadShaders("Shadeless.vertexshader", "Shadeless.fragmentshader");
+	MVP_MatrixID2 = glGetUniformLocation(programID2, "MVP");
+
+	glGenBuffers(1, &vertexbuffer2);
+	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer2);
+	glBufferData(GL_ARRAY_BUFFER, vertices2.size() * sizeof(glm::vec3), &vertices2[0], GL_STATIC_DRAW);
+}
+void DrawLightPoint(glm::vec3 position)
+{
+	glEnable(GL_BLEND);
+
+	glUseProgram(programID2);
+
+	M = glm::translate(position);
+
+	MVP = VP * M;
+	glUniformMatrix4fv(MVP_MatrixID2, 1, GL_FALSE, &MVP[0][0]);
+
+	glEnableVertexAttribArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer2);
+	glVertexAttribPointer(
+		VERTEX_POSITION, //layout in the shader.
+		3,       // size
+		GL_FLOAT,// type
+		GL_FALSE,// normalized
+		0,       // stride
+		(void*)0 // array buffer offset
+		);
+
+	glDrawArrays(GL_TRIANGLES, 0, vertices2.size());
+
+	glDisableVertexAttribArray(0);
+	glDisableVertexAttribArray(1);
+	glDisableVertexAttribArray(2);
+}
 
 void Init(void) {
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glEnable(GL_DEPTH_TEST);
 
-	glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 10.0f);
+	glm::vec3 cameraPos = glm::vec3(1.5f, 0.0f, 4.5f);
 	glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 	glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
@@ -222,7 +248,7 @@ void Init(void) {
 	VP = P*V;
 
 	InitBox();
-	//Initlamp();
+	InitLightPoint();
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
@@ -230,23 +256,30 @@ void Init(void) {
 void Render(void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
-	//alpha += 0.01;
+	alpha += 0.005;
 
-	DrawBox();
+	L = glm::vec3(4.0f, 4.0f, (-7.0f + 14.0f * glm::cos(alpha))); //Light position
+	DrawLightPoint(L);
+
+	for (int i = 0; i < 1000; i++)
+	{
+		DrawBox(((i*i) / 40.0f) * glm::sin(alpha) * 1.2f + i*0.7f, ((i*i) / 20.0f) * glm::cos(alpha) * 0.6f, -i  * 2.5f, (i+1) * alpha, glm::vec3(0.0f, 1.0f, 1.0f));
+	}	
 
 	glfwSwapBuffers(window);
 }
 
 void Uninit(void) {
 	glDeleteBuffers(1, &vertexbuffer);
-	glDeleteBuffers(1, &colorbuffer);
-	glDeleteBuffers(1, &texturevertexbuffer);
-	glDeleteBuffers(1, &textureindexbuffer);
-	glDeleteBuffers(1, &uvbuffer);
+	glDeleteBuffers(1, &vertexbuffer2);
+	glDeleteBuffers(1, &normalbuffer);
+	glDeleteBuffers(1, &tangentbuffer);
+	glDeleteBuffers(1, &bitangentbuffer);
+	
 	glDeleteVertexArrays(1, &VertexArrayID);
-	glDeleteVertexArrays(1, &textureVertexArrayID);
+	glDeleteVertexArrays(1, &VertexArrayID2);
 	glDeleteProgram(programID);
-	glDeleteProgram(textureProgramID);
+	glDeleteProgram(programID2);
 }
 
 int main(void) {

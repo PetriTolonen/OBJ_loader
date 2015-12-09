@@ -26,10 +26,12 @@ void main(){
 
   vec3 ligthDirection = TangentLightPos - TangentFragPos;
 
-  float diff = max(0.0, dot(normalize(normal), normalize(ligthDirection)));
+  float distance = length(TangentLightPos - TangentFragPos);
+  float attenuation = 1.0 / (1.0 + 0.0000009 * distance + 0.0016 * (distance * distance)); 
 
+  float diff = max(0.0, dot(normalize(normal), normalize(ligthDirection)));
   vec3 diffuse = diff * color;
 
-  FragColor = vec4(diffuse + ambient, 1.0);
+  FragColor = vec4(diffuse*attenuation + ambient*attenuation, 1.0);
   FragColor.a = 1.0;
 }

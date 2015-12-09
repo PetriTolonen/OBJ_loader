@@ -1,20 +1,3 @@
-﻿Build started 8.12.2015 15:04:27.
-     1>Project "C:\Users\PetriTol\Desktop\OBJ_loader\OpenGL_template\OpenGL_template\OpenGL_template.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\PetriTol\Desktop\OBJ_loader\OpenGL_template\OpenGL_template\common /IC:\Users\PetriTol\Desktop\OBJ_loader\OpenGL_template\..\include /IC:\Users\PetriTol\Desktop\OBJ_loader\OpenGL_template\..\src /IC:\Users\PetriTol\Desktop\OBJ_loader\OpenGL_template\..\glm /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D GLEW_STATIC /D _CRT_SECURE_NO_WARNINGS /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Main.cpp
-         Main.cpp
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\PetriTol\Desktop\OBJ_loader\OpenGL_template\Debug\OpenGL_template.exe" /INCREMENTAL /NOLOGO /LIBPATH:C:\Users\PetriTol\Desktop\OBJ_loader\OpenGL_template\..\lib glew32s.lib glfw3.lib opengl32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\PetriTol\Desktop\OBJ_loader\OpenGL_template\Debug\OpenGL_template.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /ENTRY:"mainCRTStartup" /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\PetriTol\Desktop\OBJ_loader\OpenGL_template\Debug\OpenGL_template.lib" /MACHINE:X86 Debug\controls.obj
-         Debug\shader.obj
-         Debug\tangentspace.obj
-         Debug\text2D.obj
-         Debug\texture.obj
-         Debug\vboindexer.obj
-         Debug\Main.obj
-         Debug\OBJparser.obj
-         OpenGL_template.vcxproj -> C:\Users\PetriTol\Desktop\OBJ_loader\OpenGL_template\Debug\OpenGL_template.exe
-     1>Done Building Project "C:\Users\PetriTol\Desktop\OBJ_loader\OpenGL_template\OpenGL_template\OpenGL_template.vcxproj" (Build target(s)).
-
-Build succeeded.
-
-Time Elapsed 00:00:00.93
+﻿  Main.cpp
+f:\githubrepos\obj_loader\opengl_template\opengl_template\main.cpp(259): warning C4305: '+=' : truncation from 'double' to 'float'
+  OpenGL_template.vcxproj -> F:\GitHubRepos\OBJ_loader\OpenGL_template\Debug\OpenGL_template.exe
