@@ -64,7 +64,7 @@ namespace {
 	OBJparser res;
 };
 
-void InitBox(){
+void InitObject(){
 	glGenVertexArrays(1, &VertexArrayID);
 	glBindVertexArray(VertexArrayID);
 
@@ -103,7 +103,7 @@ void InitBox(){
 	Diffuse_mapID = glGetUniformLocation(programID, "rockwall_diffuse");
 	diffuse_map = loadBMP_custom("./rockwall_diffuse_map.bmp");
 }
-void DrawBox(float x, float y, float z, float rotation, glm::vec3 rotationaxel){
+void DrawObject(float x, float y, float z, float rotation, glm::vec3 rotationaxel){
 	glEnable(GL_BLEND);
 
 	glUseProgram(programID);
@@ -184,6 +184,8 @@ void DrawBox(float x, float y, float z, float rotation, glm::vec3 rotationaxel){
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
 	glDisableVertexAttribArray(2);
+	glDisableVertexAttribArray(3);
+	glDisableVertexAttribArray(4);
 }
 
 void InitLightPoint()
@@ -191,7 +193,7 @@ void InitLightPoint()
 	glGenVertexArrays(1, &VertexArrayID2);
 	glBindVertexArray(VertexArrayID2);
 
-	res.loadOBJ("cube2.obj", vertices2, uvs, normals, tangents, bitangents);
+	res.loadOBJ("torusUvmapped.obj", vertices2, uvs, normals, tangents, bitangents);
 
 	glGenBuffers(1, &vertexbuffer2);
 
@@ -230,8 +232,6 @@ void DrawLightPoint(glm::vec3 position)
 	glDrawArrays(GL_TRIANGLES, 0, vertices2.size());
 
 	glDisableVertexAttribArray(0);
-	glDisableVertexAttribArray(1);
-	glDisableVertexAttribArray(2);
 }
 
 void Init(void) {
@@ -247,7 +247,7 @@ void Init(void) {
 
 	VP = P*V;
 
-	InitBox();
+	InitObject();
 	InitLightPoint();
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -263,7 +263,7 @@ void Render(void) {
 
 	for (int i = 0; i < 1000; i++)
 	{
-		DrawBox(((i*i) / 40.0f) * glm::sin(alpha) * 1.2f + i*0.7f, ((i*i) / 20.0f) * glm::cos(alpha) * 0.6f, -i  * 2.5f, (i+1) * alpha, glm::vec3(0.0f, 1.0f, 1.0f));
+		DrawObject(((i*i) / 40.0f) * glm::sin(alpha) * 1.2f + i*0.7f, (((i*i) / 20.0f) * glm::cos(alpha) * 0.6f), (-i  * 5.0f), (i+1) * alpha, glm::vec3(0.0f, 1.0f, 1.0f));
 	}	
 
 	glfwSwapBuffers(window);

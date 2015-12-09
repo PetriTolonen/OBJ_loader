@@ -6,8 +6,6 @@
 // Input vertex data, different for all executions of this shader.
 layout(location = VERTEX_POSITION) in vec3 vertexPosition_modelspace;
 
-out vec2 UV;
-
 /* system outputs
 vec4 gl_Position;
 float gl_PointSize;

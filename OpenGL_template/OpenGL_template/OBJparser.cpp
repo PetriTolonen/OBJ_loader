@@ -12,6 +12,22 @@ OBJparser::~OBJparser()
 
 bool OBJparser::loadOBJ(const char * path, std::vector<glm::vec3> &out_vertices, std::vector<glm::vec2> &out_uvs, std::vector<glm::vec3> &out_normals, std::vector<glm::vec3> &out_tangents, std::vector<glm::vec3> &out_bitangents)
 {
+	out_vertices.clear();
+	out_uvs.clear();
+	out_normals.clear();
+	out_tangents.clear();
+	out_bitangents.clear();
+
+	vertexIndices.clear();
+	vertexIndices.clear();
+	vertexIndices.clear();
+	uvIndices.clear();
+	uvIndices.clear();
+	uvIndices.clear();
+	normalIndices.clear();
+	normalIndices.clear();
+	normalIndices.clear();
+
 	FILE * file = fopen(path, "r");
 	if (file == NULL)
 	{
