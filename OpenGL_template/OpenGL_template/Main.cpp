@@ -77,7 +77,7 @@ void InitBox(){
 	M_MatrixID = glGetUniformLocation(programID, "M");
 	L_VecID = glGetUniformLocation(programID, "L");
 	
-	res.loadOBJ("rockwall.obj", vertices, uvs, normals, tangents, bitangents);
+	res.loadOBJ("cube2.obj", vertices, uvs, normals, tangents, bitangents);
 
 	glGenBuffers(1, &vertexbuffer);
 	glGenBuffers(1, &uvbuffer);
@@ -122,10 +122,10 @@ void DrawBox(){
 	// Set our "myTextureSampler" sampler to user Texture Unit 0
 	glUniform1i(Diffuse_mapID, 1);
 
-	//M = glm::translate(glm::vec3(cos(alpha),0.0f,0.0f))*glm::rotate(alpha, glm::vec3(1.0f,0.0f,0.0f));
+	M = glm::translate(glm::vec3(cos(alpha),0.0f,0.0f))*glm::rotate(alpha, glm::vec3(1.0f,0.0f,0.0f));
 	alpha += 0.008f;
 
-	M = glm::translate(glm::vec3(0.0f, 0.0f, 0.0f))*glm::rotate(1.5707963267f, glm::vec3(1.0f, 0.0f, 0.0f));
+	//M = glm::translate(glm::vec3(0.0f, 0.0f, 0.0f))*glm::rotate(1.5707963267f, glm::vec3(1.0f, 0.0f, 0.0f));
 
 	MVP = VP * M;
 	glUniformMatrix4fv(MVP_MatrixID, 1, GL_FALSE, &MVP[0][0]);

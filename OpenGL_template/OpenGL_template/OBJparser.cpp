@@ -90,13 +90,11 @@ bool OBJparser::loadOBJ(const char * path, std::vector<glm::vec3> &out_vertices,
 		out_normals.push_back(normal);
 	}
 
-	computeTangentBasis(vertexIndices, out_vertices, out_uvs, out_normals, out_tangents, out_bitangents);
+	computeTangentBasis(out_vertices, out_uvs, out_normals, out_tangents, out_bitangents);
 }
 
-//TODO: fix indexin.:
 void OBJparser::computeTangentBasis(
 	// inputs
-	std::vector<unsigned int>& indices,
 	std::vector<glm::vec3> & vertices,
 	std::vector<glm::vec2> & uvs,
 	std::vector<glm::vec3> & normals,
@@ -104,35 +102,20 @@ void OBJparser::computeTangentBasis(
 	std::vector<glm::vec3> & tangents,
 	std::vector<glm::vec3> & bitangents
 	){
-
-	tangents.clear();
-	bitangents.clear();
-
-	tangents.resize(indices.size());
-	bitangents.resize(indices.size());
-
-	for (unsigned int i = 0; i<indices.size(); i += 3)
+	for (unsigned int i = 0; i<vertices.size(); i += 3)
 	{
-		// Shortcuts for vertices
-		int index0 = indices[i];
-		int index1 = indices[i + 1];
-		int index2 = indices[i + 2];
-
-		glm::vec3 & v0 = vertices[index0];
-		glm::vec3 & v1 = vertices[index1];
-		glm::vec3 & v2 = vertices[index2];
+		glm::vec3 & v0 = vertices[i + 0];
+		glm::vec3 & v1 = vertices[i + 1];
+		glm::vec3 & v2 = vertices[i + 2];
 
 		// Shortcuts for UVs
-		glm::vec2 & uv0 = uvs[index0];
-		glm::vec2 & uv1 = uvs[index1];
-		glm::vec2 & uv2 = uvs[index2];
+		glm::vec2 & uv0 = uvs[i + 0];
+		glm::vec2 & uv1 = uvs[i + 1];
+		glm::vec2 & uv2 = uvs[i + 2];
 
 		// Edges of the triangle : postion delta
 		glm::vec3 deltaPos1 = v1 - v0;
 		glm::vec3 deltaPos2 = v2 - v0;
-
-		deltaPos1 = glm::vec3(deltaPos1);
-		deltaPos2 = glm::vec3(deltaPos2);
 
 		// UV delta
 		glm::vec2 deltaUV1 = uv1 - uv0;
@@ -142,16 +125,15 @@ void OBJparser::computeTangentBasis(
 		glm::vec3 tangent = (deltaPos1 * deltaUV2.y - deltaPos2 * deltaUV1.y)*r;
 		glm::vec3 bitangent = (deltaPos2 * deltaUV1.x - deltaPos1 * deltaUV2.x)*r;
 
-		//TODO: fix indexin.
 		// Set the same tangent for all three vertices of the triangle.
-		tangents[i] = normalize(tangent);
-		tangents[i+1] = normalize(tangent);
-		tangents[i+2] = normalize(tangent);
+		tangents.push_back(tangent);
+		tangents.push_back(tangent);
+		tangents.push_back(tangent);
 
-		// Same thing for bitangents
-		bitangents[i] = normalize(bitangent);
-		bitangents[i+1] = normalize(bitangent);
-		bitangents[i+2] = normalize(bitangent);
+		// Same thing for binormals
+		bitangents.push_back(bitangent);
+		bitangents.push_back(bitangent);
+		bitangents.push_back(bitangent);
 	}
 
 	for (unsigned int i = 0; i<vertices.size(); i += 1)
@@ -161,7 +143,7 @@ void OBJparser::computeTangentBasis(
 		glm::vec3 & b = bitangents[i];
 
 		// Gram-Schmidt orthogonalize
-		t = t - n * glm::dot(n, t);
+		t = glm::normalize(t - n * glm::dot(n, t));
 
 		// Calculate handedness
 		if (glm::dot(glm::cross(n, t), b) < 0.0f){

@@ -37,7 +37,7 @@ void main() {
 
 	mat3 normalMatrix = transpose(inverse(mat3(M)));	
 
-	//TODO: TBN http://www.terathon.com/code/tangent.html
+	//TODO: TBN in OBJparser. http://www.terathon.com/code/tangent.html
 	vec3 T = normalize(normalMatrix * tangents);
     vec3 B = normalize(normalMatrix * bitangents);
     vec3 N = normalize(normalMatrix * normals); 

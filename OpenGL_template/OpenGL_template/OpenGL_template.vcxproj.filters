@@ -24,16 +24,10 @@
     <ClCompile Include="common\shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="common\tangentspace.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="common\text2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="common\texture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="common\vboindexer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OBJparser.cpp">

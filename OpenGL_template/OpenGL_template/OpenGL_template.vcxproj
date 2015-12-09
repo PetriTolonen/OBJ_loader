@@ -88,10 +88,8 @@
   <ItemGroup>
     <ClCompile Include="common\controls.cpp" />
     <ClCompile Include="common\shader.cpp" />
-    <ClCompile Include="common\tangentspace.cpp" />
     <ClCompile Include="common\text2D.cpp" />
     <ClCompile Include="common\texture.cpp" />
-    <ClCompile Include="common\vboindexer.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="OBJparser.cpp" />
   </ItemGroup>
