@@ -18,6 +18,10 @@ bool OBJparser::loadOBJ(const char * path, std::vector<glm::vec3> &out_vertices,
 	out_tangents.clear();
 	out_bitangents.clear();
 
+	temp_vertices.clear();
+	temp_uvs.clear();
+	temp_normals.clear();
+
 	vertexIndices.clear();
 	vertexIndices.clear();
 	vertexIndices.clear();

@@ -1,3 +1,3 @@
-﻿  Main.cpp
-f:\githubrepos\obj_loader\opengl_template\opengl_template\main.cpp(259): warning C4305: '+=' : truncation from 'double' to 'float'
+﻿  OBJparser.cpp
+f:\githubrepos\obj_loader\opengl_template\opengl_template\objparser.cpp(114): warning C4715: 'OBJparser::loadOBJ' : not all control paths return a value
   OpenGL_template.vcxproj -> F:\GitHubRepos\OBJ_loader\OpenGL_template\Debug\OpenGL_template.exe

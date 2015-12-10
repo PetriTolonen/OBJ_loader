@@ -73,7 +73,7 @@ void InitObject(){
 	M_MatrixID = glGetUniformLocation(programID, "M");
 	L_VecID = glGetUniformLocation(programID, "L");
 	
-	res.loadOBJ("cube2.obj", vertices, uvs, normals, tangents, bitangents);
+	res.loadOBJ("torusUvmapped.obj", vertices, uvs, normals, tangents, bitangents);
 
 	glGenBuffers(1, &vertexbuffer);
 	glGenBuffers(1, &uvbuffer);
@@ -193,7 +193,7 @@ void InitLightPoint()
 	glGenVertexArrays(1, &VertexArrayID2);
 	glBindVertexArray(VertexArrayID2);
 
-	res.loadOBJ("torusUvmapped.obj", vertices2, uvs, normals, tangents, bitangents);
+	res.loadOBJ("cube2.obj", vertices2, uvs, normals, tangents, bitangents);
 
 	glGenBuffers(1, &vertexbuffer2);
 
@@ -263,7 +263,7 @@ void Render(void) {
 
 	for (int i = 0; i < 1000; i++)
 	{
-		DrawObject(((i*i) / 40.0f) * glm::sin(alpha) * 1.2f + i*0.7f, (((i*i) / 20.0f) * glm::cos(alpha) * 0.6f), (-i  * 5.0f), (i+1) * alpha, glm::vec3(0.0f, 1.0f, 1.0f));
+		DrawObject(((i*i) / 40.0f) * glm::sin(alpha) * 1.2f + i*0.7f, (((i*i) / 20.0f) * glm::cos(alpha) * 0.6f), (-i  * 3.0f), (i+1) * alpha, glm::vec3(0.0f, 1.0f, 1.0f));
 	}	
 
 	glfwSwapBuffers(window);
