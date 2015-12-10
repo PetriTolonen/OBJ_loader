@@ -25,7 +25,6 @@ namespace {
 	GLuint bitangentbuffer;
 
 	GLuint VertexArrayID; 
-	GLuint VertexArrayID2;
 	GLuint indexbuffer;
 	GLFWwindow* window;
 	float alpha = glm::radians(0.0f);
@@ -190,9 +189,6 @@ void DrawObject(float x, float y, float z, float rotation, glm::vec3 rotationaxe
 
 void InitLightPoint()
 {
-	glGenVertexArrays(1, &VertexArrayID2);
-	glBindVertexArray(VertexArrayID2);
-
 	res.loadOBJ("cube2.obj", vertices2, uvs, normals, tangents, bitangents);
 
 	glGenBuffers(1, &vertexbuffer2);
@@ -273,7 +269,6 @@ void Uninit(void) {
 	glDeleteBuffers(1, &bitangentbuffer);
 	
 	glDeleteVertexArrays(1, &VertexArrayID);
-	glDeleteVertexArrays(1, &VertexArrayID2);
 	glDeleteProgram(programID);
 	glDeleteProgram(programID2);
 }
