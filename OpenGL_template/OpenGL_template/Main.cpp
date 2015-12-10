@@ -202,10 +202,6 @@ void InitLightPoint()
 
 	programID2 = LoadShaders("Shadeless.vertexshader", "Shadeless.fragmentshader");
 	MVP_MatrixID2 = glGetUniformLocation(programID2, "MVP");
-
-	glGenBuffers(1, &vertexbuffer2);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer2);
-	glBufferData(GL_ARRAY_BUFFER, vertices2.size() * sizeof(glm::vec3), &vertices2[0], GL_STATIC_DRAW);
 }
 void DrawLightPoint(glm::vec3 position)
 {
