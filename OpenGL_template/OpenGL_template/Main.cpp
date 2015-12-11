@@ -14,7 +14,6 @@
 #include <iostream>
 
 #include "OBJparser.h"
-#include <fstream>
 
 namespace {
 	GLuint programID;
@@ -191,15 +190,6 @@ void DrawObject(float x, float y, float z, float rotation, glm::vec3 rotationaxe
 void InitLightPoint()
 {
 	res.loadOBJ("cube2.obj", vertices2, uvs, normals, tangents, bitangents);
-
-	// taking data for another usage...
-	std::ofstream outPutData;
-	outPutData.open("cube.txt");
-	for (int i = 0; i < vertices2.size(); i++)
-	{
-		outPutData << vertices2[i].x << " , " << vertices2[i].y << " , " << vertices2[i].x << " , " << std::endl;
-	}
-	outPutData.close();
 
 	glGenBuffers(1, &vertexbuffer2);
 

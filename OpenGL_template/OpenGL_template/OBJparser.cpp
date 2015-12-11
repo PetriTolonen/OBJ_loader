@@ -1,5 +1,6 @@
 #include "OBJparser.h"
 #include <iostream>
+#include <fstream>
 
 OBJparser::OBJparser()
 {
@@ -109,6 +110,15 @@ bool OBJparser::loadOBJ(const char * path, std::vector<glm::vec3> &out_vertices,
 		glm::vec3 normal = temp_normals[normalIndex - 1];
 		out_normals.push_back(normal);
 	}
+
+	//// taking data for another usage...
+	//std::ofstream outPutData;
+	//outPutData.open("cube.txt");
+	//for (int i = 0; i < vertexIndices.size(); i++)
+	//{
+	//	outPutData << out_normals[i].x << " , " << out_normals[i].y << " , " << out_normals[i].z << " , " << std::endl;
+	//}
+	//outPutData.close();
 
 	computeTangentBasis(out_vertices, out_uvs, out_normals, out_tangents, out_bitangents);
 }
