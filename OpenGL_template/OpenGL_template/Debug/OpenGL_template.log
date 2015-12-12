@@ -1,6 +1,9 @@
-﻿  Main.cpp
-f:\githubrepos\obj_loader\opengl_template\opengl_template\cube.inl(38): warning C4305: 'initializing' : truncation from 'double' to 'float'
-f:\githubrepos\obj_loader\opengl_template\opengl_template\cube.inl(152): warning C4305: 'initializing' : truncation from 'double' to 'float'
-f:\githubrepos\obj_loader\opengl_template\opengl_template\cube.inl(190): warning C4305: 'initializing' : truncation from 'double' to 'float'
+﻿cl : Command line warning D9028: minimal rebuild failure, reverting to normal build
+  Main.cpp
+f:\githubrepos\obj_loader\opengl_template\opengl_template\cube.inl(11522): warning C4305: 'initializing' : truncation from 'double' to 'float'
+f:\githubrepos\obj_loader\opengl_template\opengl_template\cube.inl(23044): warning C4305: 'initializing' : truncation from 'double' to 'float'
+f:\githubrepos\obj_loader\opengl_template\opengl_template\cube.inl(34566): warning C4305: 'initializing' : truncation from 'double' to 'float'
+f:\githubrepos\obj_loader\opengl_template\opengl_template\cube.inl(46088): warning C4305: 'initializing' : truncation from 'double' to 'float'
+f:\githubrepos\obj_loader\opengl_template\opengl_template\cube.inl(57610): warning C4305: 'initializing' : truncation from 'double' to 'float'
 f:\githubrepos\obj_loader\opengl_template\opengl_template\main.cpp(276): warning C4305: '+=' : truncation from 'double' to 'float'
   OpenGL_template.vcxproj -> F:\GitHubRepos\OBJ_loader\OpenGL_template\Debug\OpenGL_template.exe

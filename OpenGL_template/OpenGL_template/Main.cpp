@@ -194,7 +194,7 @@ void DrawObject(float x, float y, float z, float rotation, glm::vec3 rotationaxe
 void InitLightPoint()
 {
 	// Use this atleast once to generate inl object.
-	//res.loadOBJ("cube.obj", vertices2, uvs, normals, tangents, bitangents, true);
+	//res.loadOBJ("uvpointball.obj", vertices2, uvs, normals, tangents, bitangents, true);
 
 	glGenBuffers(1, &vertexbuffer2);
 
@@ -245,7 +245,7 @@ void DrawLightPoint(glm::vec3 position, float rotation, glm::vec3 rotationaxel)
 		);
 
 	//glDrawArrays(GL_TRIANGLES, 0, vertices2.size());
-	glDrawArrays(GL_TRIANGLES, 0, sizeof(Vertices)/3);
+	glDrawArrays(GL_POINTS, 0, sizeof(Vertices)/3);
 
 
 	glDisableVertexAttribArray(0);
@@ -276,7 +276,7 @@ void Render(void) {
 	alpha += 0.005;
 
 	L = glm::vec3(4.0f, 4.0f, (-7.0f + 14.0f * glm::cos(alpha))); //Light position
-	DrawLightPoint(L, 0.0f, glm::vec3(0.0f, 0.0f, 1.0f));
+	DrawLightPoint(L, alpha, glm::vec3(0.0f, 0.0f, 1.0f));
 
 	for (int i = 0; i < 1000; i++)
 	{
