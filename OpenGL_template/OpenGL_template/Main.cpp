@@ -193,11 +193,12 @@ void DrawObject(float x, float y, float z, float rotation, glm::vec3 rotationaxe
 // Testing generated inl file. TODO: Remove center vertex (0 , 0).
 void InitLightPoint()
 {
-	// Use this to generate inl cube.
+	// Use this atleast once to generate inl object.
 	//res.loadOBJ("cube.obj", vertices2, uvs, normals, tangents, bitangents, true);
 
 	glGenBuffers(1, &vertexbuffer2);
 
+	// If using the data from vertices2
 	//glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer2);
 	//glBufferData(GL_ARRAY_BUFFER, vertices2.size() * sizeof(glm::vec3), &vertices2[0], GL_STATIC_DRAW);
 
@@ -205,16 +206,29 @@ void InitLightPoint()
 	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer2);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertices), &Vertices[0], GL_STATIC_DRAW);
 
+	// Light cube doesnt need uvs, normals... These are for testing
+	/*glBindBuffer(GL_ARRAY_BUFFER, uvbuffer2);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(Uvs), &Uvs[0], GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ARRAY_BUFFER, normalbuffer2);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(Normals), &Normals[0], GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ARRAY_BUFFER, tangentbuffer2);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(Tangents), &Tangents[0], GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ARRAY_BUFFER, bitangentbuffer2);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(Bitangents), &Bitangents[0], GL_STATIC_DRAW);*/
+
 	programID2 = LoadShaders("Shadeless.vertexshader", "Shadeless.fragmentshader");
 	MVP_MatrixID2 = glGetUniformLocation(programID2, "MVP");
 }
-void DrawLightPoint(glm::vec3 position)
+void DrawLightPoint(glm::vec3 position, float rotation, glm::vec3 rotationaxel)
 {
 	glEnable(GL_BLEND);
 
 	glUseProgram(programID2);
 
-	M = glm::translate(position);
+	M = glm::translate(position)*glm::rotate(rotation, rotationaxel);;
 
 	MVP = VP * M;
 	glUniformMatrix4fv(MVP_MatrixID2, 1, GL_FALSE, &MVP[0][0]);
@@ -230,8 +244,8 @@ void DrawLightPoint(glm::vec3 position)
 		(void*)0 // array buffer offset
 		);
 
-	//glDrawArrays(GL_POINTS, 0, vertices2.size());
-	glDrawArrays(GL_LINE_LOOP, 0, (sizeof(Vertices)/3));
+	//glDrawArrays(GL_TRIANGLES, 0, vertices2.size());
+	glDrawArrays(GL_TRIANGLES, 0, sizeof(Vertices)/3);
 
 
 	glDisableVertexAttribArray(0);
@@ -262,7 +276,7 @@ void Render(void) {
 	alpha += 0.005;
 
 	L = glm::vec3(4.0f, 4.0f, (-7.0f + 14.0f * glm::cos(alpha))); //Light position
-	DrawLightPoint(L);
+	DrawLightPoint(L, 0.0f, glm::vec3(0.0f, 0.0f, 1.0f));
 
 	for (int i = 0; i < 1000; i++)
 	{
@@ -327,6 +341,7 @@ int main(void) {
 		glfwWindowShouldClose(window) == 0);
 
 	glfwTerminate();
+	Uninit();
 
 	return 0;
 }
