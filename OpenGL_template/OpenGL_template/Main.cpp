@@ -250,8 +250,7 @@ void DrawLightPoint(glm::vec3 position, float rotation, glm::vec3 rotationaxel)
 		);
 
 	//glDrawArrays(GL_TRIANGLES, 0, vertices2.size());
-	
-	glDrawArrays(GL_POINTS, 0, sizeOfVArray/3);
+	glDrawArrays(GL_POINTS, 0, sizeOfVArray / 3);
 
 	glDisableVertexAttribArray(0);
 }
@@ -281,7 +280,7 @@ void Render(void) {
 	alpha += 0.005;
 
 	L = glm::vec3(4.0f, 4.0f, (-7.0f + 14.0f * glm::cos(alpha))); //Light position
-	DrawLightPoint(L, alpha, glm::vec3(0.0f, 0.0f, 1.0f));
+	DrawLightPoint(L /*glm::vec3(2.0f, 0.0f,0.0f)*/, alpha, glm::vec3(0.0f, 0.0f, 1.0f));
 
 	for (int i = 0; i < 1000; i++)
 	{
