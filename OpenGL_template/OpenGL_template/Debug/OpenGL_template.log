@@ -1,9 +1,125 @@
-﻿cl : Command line warning D9028: minimal rebuild failure, reverting to normal build
+﻿  OBJparser.cpp
+f:\githubrepos\obj_loader\opengl_template\opengl_template\objparser.cpp(123): warning C4018: '<' : signed/unsigned mismatch
+f:\githubrepos\obj_loader\opengl_template\opengl_template\objparser.cpp(130): warning C4018: '<' : signed/unsigned mismatch
+f:\githubrepos\obj_loader\opengl_template\opengl_template\objparser.cpp(137): warning C4018: '<' : signed/unsigned mismatch
+f:\githubrepos\obj_loader\opengl_template\opengl_template\objparser.cpp(144): warning C4018: '<' : signed/unsigned mismatch
+f:\githubrepos\obj_loader\opengl_template\opengl_template\objparser.cpp(151): warning C4018: '<' : signed/unsigned mismatch
   Main.cpp
 f:\githubrepos\obj_loader\opengl_template\opengl_template\cube.inl(11522): warning C4305: 'initializing' : truncation from 'double' to 'float'
 f:\githubrepos\obj_loader\opengl_template\opengl_template\cube.inl(23044): warning C4305: 'initializing' : truncation from 'double' to 'float'
 f:\githubrepos\obj_loader\opengl_template\opengl_template\cube.inl(34566): warning C4305: 'initializing' : truncation from 'double' to 'float'
 f:\githubrepos\obj_loader\opengl_template\opengl_template\cube.inl(46088): warning C4305: 'initializing' : truncation from 'double' to 'float'
 f:\githubrepos\obj_loader\opengl_template\opengl_template\cube.inl(57610): warning C4305: 'initializing' : truncation from 'double' to 'float'
-f:\githubrepos\obj_loader\opengl_template\opengl_template\main.cpp(276): warning C4305: '+=' : truncation from 'double' to 'float'
+f:\githubrepos\obj_loader\opengl_template\opengl_template\main.cpp(283): warning C4305: '+=' : truncation from 'double' to 'float'
+f:\microsoft visual studio 12.0\vc\include\xmemory0(600): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+          f:\microsoft visual studio 12.0\vc\include\xmemory0(723) : see reference to function template instantiation 'void std::allocator<_Ty>::construct<_Objty,float&>(_Objty *,float &)' being compiled
+          with
+          [
+              _Ty=int
+  ,            _Objty=int
+          ]
+          f:\microsoft visual studio 12.0\vc\include\xmemory0(723) : see reference to function template instantiation 'void std::allocator<_Ty>::construct<_Objty,float&>(_Objty *,float &)' being compiled
+          with
+          [
+              _Ty=int
+  ,            _Objty=int
+          ]
+          f:\microsoft visual studio 12.0\vc\include\xmemory0(872) : see reference to function template instantiation 'void std::allocator_traits<_Alloc>::construct<_Ty,float&>(std::allocator<_Ty> &,_Objty *,float &)' being compiled
+          with
+          [
+              _Alloc=std::allocator<int>
+  ,            _Ty=int
+  ,            _Objty=int
+          ]
+          f:\microsoft visual studio 12.0\vc\include\xmemory0(872) : see reference to function template instantiation 'void std::allocator_traits<_Alloc>::construct<_Ty,float&>(std::allocator<_Ty> &,_Objty *,float &)' being compiled
+          with
+          [
+              _Alloc=std::allocator<int>
+  ,            _Ty=int
+  ,            _Objty=int
+          ]
+          f:\microsoft visual studio 12.0\vc\include\xmemory(378) : see reference to function template instantiation 'void std::_Wrap_alloc<std::allocator<_Ty>>::construct<int,float&>(_Ty *,float &)' being compiled
+          with
+          [
+              _Ty=int
+          ]
+          f:\microsoft visual studio 12.0\vc\include\xmemory(378) : see reference to function template instantiation 'void std::_Wrap_alloc<std::allocator<_Ty>>::construct<int,float&>(_Ty *,float &)' being compiled
+          with
+          [
+              _Ty=int
+          ]
+          f:\microsoft visual studio 12.0\vc\include\xmemory(416) : see reference to function template instantiation '_FwdIt std::_Uninit_copy<_InIt,_FwdIt,std::allocator<_Ty>>(_InIt,_InIt,_FwdIt,std::_Wrap_alloc<std::allocator<_Ty>> &,std::_Nonscalar_ptr_iterator_tag)' being compiled
+          with
+          [
+              _FwdIt=int *
+  ,            _InIt=float *
+  ,            _Ty=int
+          ]
+          f:\microsoft visual studio 12.0\vc\include\xmemory(427) : see reference to function template instantiation '_FwdIt std::_Uninit_copy<_Iter,int,_Alloc>(_InIt,_InIt,_FwdIt,_Alloc &)' being compiled
+          with
+          [
+              _FwdIt=int *
+  ,            _Iter=float *
+  ,            _Alloc=std::_Wrap_alloc<std::allocator<int>>
+  ,            _InIt=float *
+          ]
+          f:\microsoft visual studio 12.0\vc\include\vector(1640) : see reference to function template instantiation '_FwdIt std::_Uninitialized_copy<_Iter,int*,std::_Wrap_alloc<std::allocator<_Ty>>>(_InIt,_InIt,_FwdIt,_Alloc &)' being compiled
+          with
+          [
+              _FwdIt=int *
+  ,            _Iter=float *
+  ,            _Ty=int
+  ,            _InIt=float *
+  ,            _Alloc=std::_Wrap_alloc<std::allocator<int>>
+          ]
+          f:\microsoft visual studio 12.0\vc\include\vector(789) : see reference to function template instantiation 'int *std::vector<int,std::allocator<_Ty>>::_Ucopy<_Iter>(_Iter,_Iter,int *)' being compiled
+          with
+          [
+              _Ty=int
+  ,            _Iter=float *
+          ]
+          f:\microsoft visual studio 12.0\vc\include\vector(789) : see reference to function template instantiation 'int *std::vector<int,std::allocator<_Ty>>::_Ucopy<_Iter>(_Iter,_Iter,int *)' being compiled
+          with
+          [
+              _Ty=int
+  ,            _Iter=float *
+          ]
+          f:\microsoft visual studio 12.0\vc\include\vector(766) : see reference to function template instantiation 'void std::vector<int,std::allocator<_Ty>>::_Construct<_Iter>(_Iter,_Iter,std::forward_iterator_tag)' being compiled
+          with
+          [
+              _Ty=int
+  ,            _Iter=float *
+          ]
+          f:\microsoft visual studio 12.0\vc\include\vector(766) : see reference to function template instantiation 'void std::vector<int,std::allocator<_Ty>>::_Construct<_Iter>(_Iter,_Iter,std::forward_iterator_tag)' being compiled
+          with
+          [
+              _Ty=int
+  ,            _Iter=float *
+          ]
+          f:\microsoft visual studio 12.0\vc\include\vector(751) : see reference to function template instantiation 'void std::vector<int,std::allocator<_Ty>>::_Construct<_Iter>(_Iter,_Iter)' being compiled
+          with
+          [
+              _Ty=int
+  ,            _Iter=float *
+          ]
+          f:\microsoft visual studio 12.0\vc\include\vector(751) : see reference to function template instantiation 'void std::vector<int,std::allocator<_Ty>>::_Construct<_Iter>(_Iter,_Iter)' being compiled
+          with
+          [
+              _Ty=int
+  ,            _Iter=float *
+          ]
+          f:\githubrepos\obj_loader\opengl_template\opengl_template\main.cpp(208) : see reference to function template instantiation 'std::vector<int,std::allocator<_Ty>>::vector<float*,void>(_Iter,_Iter)' being compiled
+          with
+          [
+              _Ty=int
+  ,            _Iter=float *
+          ]
+          f:\githubrepos\obj_loader\opengl_template\opengl_template\main.cpp(208) : see reference to function template instantiation 'std::vector<int,std::allocator<_Ty>>::vector<float*,void>(_Iter,_Iter)' being compiled
+          with
+          [
+              _Ty=int
+  ,            _Iter=float *
+          ]
+  Generating Code...
+f:\githubrepos\obj_loader\opengl_template\opengl_template\objparser.cpp(158): warning C4715: 'OBJparser::loadOBJ' : not all control paths return a value
   OpenGL_template.vcxproj -> F:\GitHubRepos\OBJ_loader\OpenGL_template\Debug\OpenGL_template.exe
