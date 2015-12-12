@@ -100,10 +100,10 @@ void InitObject(){
 	glBufferData(GL_ARRAY_BUFFER, bitangents.size() * sizeof(glm::vec3), &bitangents[0], GL_STATIC_DRAW);
 
 	Normal_mapID = glGetUniformLocation(programID, "rockwall_normal");	
-	normal_map = loadBMP_custom("./rockwall_normal_map.bmp");
+	normal_map = loadBMP_custom("./torusnormal.bmp");
 
 	Diffuse_mapID = glGetUniformLocation(programID, "rockwall_diffuse");
-	diffuse_map = loadBMP_custom("./rockwall_diffuse_map.bmp");
+	diffuse_map = loadBMP_custom("./uvtemplate.bmp");
 }
 void DrawObject(float x, float y, float z, float rotation, glm::vec3 rotationaxel){
 	glEnable(GL_BLEND);
@@ -315,7 +315,7 @@ int main(void) {
 	int h = 600;
 	
 	window = glfwCreateWindow(w, h,
-		"Tutorial UV", NULL, NULL);
+		"OpenGL demo", NULL, NULL);
 	if (window == NULL){
 		fprintf(stderr, "Failed to open GLFW window.");
 		glfwTerminate();
