@@ -11,8 +11,9 @@ OBJparser::~OBJparser()
 {
 }
 
-bool OBJparser::loadOBJ(const char * path, std::vector<glm::vec3> &out_vertices, std::vector<glm::vec2> &out_uvs, std::vector<glm::vec3> &out_normals, std::vector<glm::vec3> &out_tangents, std::vector<glm::vec3> &out_bitangents)
+bool OBJparser::loadOBJ(const char * path, std::vector<glm::vec3> &out_vertices, std::vector<glm::vec2> &out_uvs, std::vector<glm::vec3> &out_normals, std::vector<glm::vec3> &out_tangents, std::vector<glm::vec3> &out_bitangents, bool saveToTxt)
 {
+	this->saveToTxt = saveToTxt;
 	out_vertices.clear();
 	out_uvs.clear();
 	out_normals.clear();
@@ -110,17 +111,50 @@ bool OBJparser::loadOBJ(const char * path, std::vector<glm::vec3> &out_vertices,
 		glm::vec3 normal = temp_normals[normalIndex - 1];
 		out_normals.push_back(normal);
 	}
-
-	//// taking data for another usage...
-	//std::ofstream outPutData;
-	//outPutData.open("cube.txt");
-	//for (int i = 0; i < vertexIndices.size(); i++)
-	//{
-	//	outPutData << out_normals[i].x << " , " << out_normals[i].y << " , " << out_normals[i].z << " , " << std::endl;
-	//}
-	//outPutData.close();
-
 	computeTangentBasis(out_vertices, out_uvs, out_normals, out_tangents, out_bitangents);
+	
+	// taking data for another usage...
+	if (saveToTxt == true)
+	{
+		std::ofstream outPutData;
+		outPutData.open("cube.txt");
+
+		outPutData << "float Vertices[] = {\n";
+		for (int i = 0; i < out_vertices.size(); i++)
+		{
+			outPutData << out_vertices[i].x << " , " << out_vertices[i].y << " , " << out_vertices[i].z << " , " << std::endl;
+		}
+		outPutData << "};\n";
+
+		outPutData << "float Uvs[] = {\n";
+		for (int i = 0; i < out_uvs.size(); i++)
+		{
+			outPutData << out_uvs[i].x << " , " << out_uvs[i].y << " , "  << std::endl;
+		}
+		outPutData << "};\n";
+	
+		outPutData << "float Normals[] = {\n";
+		for (int i = 0; i < out_normals.size(); i++)
+		{
+			outPutData << out_normals[i].x << " , " << out_normals[i].y << " , " << out_normals[i].z << " , " << std::endl;
+		}
+		outPutData << "};\n";
+
+		outPutData << "float Tangents[] = {\n";
+		for (int i = 0; i < out_tangents.size(); i++)
+		{
+			outPutData << out_tangents[i].x << " , " << out_tangents[i].y << " , " << out_tangents[i].z << " , " << std::endl;
+		}
+		outPutData << "};\n";
+
+		outPutData << "float Bitangents[] = {\n";
+		for (int i = 0; i < out_bitangents.size(); i++)
+		{
+			outPutData << out_bitangents[i].x << " , " << out_bitangents[i].y << " , " << out_bitangents[i].z << " , " << std::endl;
+		}
+		outPutData << "};\n";
+		outPutData.close();
+	}
 }
 
 void OBJparser::computeTangentBasis(

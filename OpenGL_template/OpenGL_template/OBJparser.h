@@ -8,7 +8,7 @@ public:
 	OBJparser();
 	~OBJparser();
 
-	bool loadOBJ(const char * path, std::vector<glm::vec3> &out_vertices, std::vector<glm::vec2> &out_uvs, std::vector<glm::vec3> &out_normals, std::vector<glm::vec3> &out_tangents, std::vector<glm::vec3> &out_bitangents);
+	bool loadOBJ(const char * path, std::vector<glm::vec3> &out_vertices, std::vector<glm::vec2> &out_uvs, std::vector<glm::vec3> &out_normals, std::vector<glm::vec3> &out_tangents, std::vector<glm::vec3> &out_bitangents, bool saveToTxt);
 	void OBJparser::computeTangentBasis(
 		// inputs
 		std::vector<glm::vec3> & vertices,
@@ -25,5 +25,7 @@ private:
 	std::vector<glm::vec3> temp_normals;
 
 	std::string path;
+
+	bool saveToTxt;
 };
 

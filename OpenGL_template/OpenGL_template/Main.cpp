@@ -72,7 +72,7 @@ void InitObject(){
 	M_MatrixID = glGetUniformLocation(programID, "M");
 	L_VecID = glGetUniformLocation(programID, "L");
 	
-	res.loadOBJ("torusUvmapped.obj", vertices, uvs, normals, tangents, bitangents);
+	res.loadOBJ("cube2.obj", vertices, uvs, normals, tangents, bitangents, true);
 
 	glGenBuffers(1, &vertexbuffer);
 	glGenBuffers(1, &uvbuffer);
@@ -189,7 +189,7 @@ void DrawObject(float x, float y, float z, float rotation, glm::vec3 rotationaxe
 
 void InitLightPoint()
 {
-	res.loadOBJ("cube2.obj", vertices2, uvs, normals, tangents, bitangents);
+	res.loadOBJ("cube2.obj", vertices2, uvs, normals, tangents, bitangents, false);
 
 	glGenBuffers(1, &vertexbuffer2);
 

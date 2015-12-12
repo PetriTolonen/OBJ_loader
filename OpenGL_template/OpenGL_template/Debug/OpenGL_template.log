@@ -1,4 +1,8 @@
 ﻿  OBJparser.cpp
-f:\githubrepos\obj_loader\opengl_template\opengl_template\objparser.cpp(117): warning C4018: '<' : signed/unsigned mismatch
-f:\githubrepos\obj_loader\opengl_template\opengl_template\objparser.cpp(124): warning C4715: 'OBJparser::loadOBJ' : not all control paths return a value
+f:\githubrepos\obj_loader\opengl_template\opengl_template\objparser.cpp(123): warning C4018: '<' : signed/unsigned mismatch
+f:\githubrepos\obj_loader\opengl_template\opengl_template\objparser.cpp(130): warning C4018: '<' : signed/unsigned mismatch
+f:\githubrepos\obj_loader\opengl_template\opengl_template\objparser.cpp(137): warning C4018: '<' : signed/unsigned mismatch
+f:\githubrepos\obj_loader\opengl_template\opengl_template\objparser.cpp(144): warning C4018: '<' : signed/unsigned mismatch
+f:\githubrepos\obj_loader\opengl_template\opengl_template\objparser.cpp(151): warning C4018: '<' : signed/unsigned mismatch
+f:\githubrepos\obj_loader\opengl_template\opengl_template\objparser.cpp(158): warning C4715: 'OBJparser::loadOBJ' : not all control paths return a value
   OpenGL_template.vcxproj -> F:\GitHubRepos\OBJ_loader\OpenGL_template\Debug\OpenGL_template.exe
