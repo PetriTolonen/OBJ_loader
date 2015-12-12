@@ -119,35 +119,35 @@ bool OBJparser::loadOBJ(const char * path, std::vector<glm::vec3> &out_vertices,
 		std::ofstream outPutData;
 		outPutData.open("cube.inl");
 
-		outPutData << "float Vertices[] = {\n";
+		outPutData << "float Vertices[" << out_vertices.size() * 3<<"] = { \n";
 		for (int i = 0; i < out_vertices.size(); i++)
 		{
 			outPutData << out_vertices[i].x << " , " << out_vertices[i].y << " , " << out_vertices[i].z << " , " << std::endl;
 		}
 		outPutData << "};\n";
 
-		outPutData << "float Uvs[] = {\n";
+		outPutData << "float Uvs[" << out_uvs.size() * 3 << "] = {\n";
 		for (int i = 0; i < out_uvs.size(); i++)
 		{
 			outPutData << out_uvs[i].x << " , " << out_uvs[i].y << " , "  << std::endl;
 		}
 		outPutData << "};\n";
 	
-		outPutData << "float Normals[] = {\n";
+		outPutData << "float Normals[" << out_normals.size() * 3 << "] = {\n";
 		for (int i = 0; i < out_normals.size(); i++)
 		{
 			outPutData << out_normals[i].x << " , " << out_normals[i].y << " , " << out_normals[i].z << " , " << std::endl;
 		}
 		outPutData << "};\n";
 
-		outPutData << "float Tangents[] = {\n";
+		outPutData << "float Tangents[" << out_tangents.size() * 3 << "] = {\n";
 		for (int i = 0; i < out_tangents.size(); i++)
 		{
 			outPutData << out_tangents[i].x << " , " << out_tangents[i].y << " , " << out_tangents[i].z << " , " << std::endl;
 		}
 		outPutData << "};\n";
 
-		outPutData << "float Bitangents[] = {\n";
+		outPutData << "float Bitangents[" << out_bitangents.size() * 3 << "] = {\n";
 		for (int i = 0; i < out_bitangents.size(); i++)
 		{
 			outPutData << out_bitangents[i].x << " , " << out_bitangents[i].y << " , " << out_bitangents[i].z << " , " << std::endl;

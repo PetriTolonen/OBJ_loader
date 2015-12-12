@@ -65,8 +65,7 @@ namespace {
 
 	OBJparser res;
 
-	// for inl ball
-	int howManyTriangles;
+	int sizeOfVArray;
 };
 
 void InitObject(){
@@ -108,7 +107,7 @@ void InitObject(){
 	Diffuse_mapID = glGetUniformLocation(programID, "rockwall_diffuse");
 	diffuse_map = loadBMP_custom("./uvtemplate.bmp");
 }
-void DrawObject(float x, float y, float z, float rotation, glm::vec3 rotationaxel){
+void DrawObject(glm::vec3 position, float rotation, glm::vec3 rotationaxel){
 	glEnable(GL_BLEND);
 
 	glUseProgram(programID);
@@ -121,7 +120,7 @@ void DrawObject(float x, float y, float z, float rotation, glm::vec3 rotationaxe
 	glBindTexture(GL_TEXTURE_2D, diffuse_map);
 	glUniform1i(Diffuse_mapID, 1);
 
-	M = glm::translate(glm::vec3(x, y, z))*glm::rotate(rotation, rotationaxel);
+	M = glm::translate(position)*glm::rotate(rotation, rotationaxel);
 
 	MVP = VP * M;
 	glUniformMatrix4fv(MVP_MatrixID, 1, GL_FALSE, &MVP[0][0]);
@@ -197,7 +196,7 @@ void DrawObject(float x, float y, float z, float rotation, glm::vec3 rotationaxe
 void InitLightPoint()
 {
 	// Use this atleast once to generate inl object.
-	//res.loadOBJ("uvpointball.obj", vertices2, uvs, normals, tangents, bitangents, true);
+	res.loadOBJ("uvpointball.obj", vertices2, uvs, normals, tangents, bitangents, true);
 
 	glGenBuffers(1, &vertexbuffer2);
 
@@ -205,8 +204,8 @@ void InitLightPoint()
 	//glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer2);
 	//glBufferData(GL_ARRAY_BUFFER, vertices2.size() * sizeof(glm::vec3), &vertices2[0], GL_STATIC_DRAW);
 
-	std::vector<int> v(std::begin(Vertices), std::end(Vertices));
-	howManyTriangles = v.size() / 3;
+	std::vector<float> v(std::begin(Vertices), std::end(Vertices));
+	sizeOfVArray = v.size();
 
 	glGenBuffers(1, &vertexbuffer2);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer2);
@@ -252,8 +251,7 @@ void DrawLightPoint(glm::vec3 position, float rotation, glm::vec3 rotationaxel)
 
 	//glDrawArrays(GL_TRIANGLES, 0, vertices2.size());
 	
-	glDrawArrays(GL_POINTS, 0, howManyTriangles);
-
+	glDrawArrays(GL_POINTS, 0, sizeOfVArray/3);
 
 	glDisableVertexAttribArray(0);
 }
@@ -283,11 +281,11 @@ void Render(void) {
 	alpha += 0.005;
 
 	L = glm::vec3(4.0f, 4.0f, (-7.0f + 14.0f * glm::cos(alpha))); //Light position
-	DrawLightPoint(glm::vec3(2.0f,0.0f,-1.0f), alpha, glm::vec3(0.0f, 0.0f, 1.0f));
+	DrawLightPoint(L, alpha, glm::vec3(0.0f, 0.0f, 1.0f));
 
 	for (int i = 0; i < 1000; i++)
 	{
-		DrawObject(((i*i) / 40.0f) * glm::sin(alpha) * 1.2f + i*0.7f, (((i*i) / 20.0f) * glm::cos(alpha) * 0.6f), (-i  * 3.0f), (i+1) * alpha, glm::vec3(0.0f, 1.0f, 1.0f));
+		DrawObject(glm::vec3(((i*i) / 40.0f) * glm::sin(alpha) * 1.2f + i*0.7f, (((i*i) / 20.0f) * glm::cos(alpha) * 0.6f), (-i  * 3.0f)), (i+1) * alpha, glm::vec3(0.0f, 1.0f, 1.0f));
 	}	
 
 	glfwSwapBuffers(window);
