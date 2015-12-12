@@ -190,7 +190,7 @@ void DrawObject(float x, float y, float z, float rotation, glm::vec3 rotationaxe
 	glDisableVertexAttribArray(4);
 }
 
-// Testing generated inl file. TODO: Remove center vertex (0 , 0)...
+// Testing generated inl file. TODO: Remove center vertex (0 , 0).
 void InitLightPoint()
 {
 	// Use this to generate inl cube.
@@ -231,7 +231,7 @@ void DrawLightPoint(glm::vec3 position)
 		);
 
 	//glDrawArrays(GL_POINTS, 0, vertices2.size());
-	glDrawArrays(GL_LINE_LOOP, 0, sizeof(Vertices));
+	glDrawArrays(GL_LINE_LOOP, 0, (sizeof(Vertices)/3));
 
 
 	glDisableVertexAttribArray(0);

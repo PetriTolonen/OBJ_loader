@@ -113,7 +113,7 @@ bool OBJparser::loadOBJ(const char * path, std::vector<glm::vec3> &out_vertices,
 	}
 	computeTangentBasis(out_vertices, out_uvs, out_normals, out_tangents, out_bitangents);
 	
-	// Saving data... TODO: remove last , from arrays.
+	// Saving data... TODO: remove last , from arrays?
 	if (saveToTxt == true)
 	{
 		std::ofstream outPutData;
