@@ -55,5 +55,8 @@
     <None Include="Shadeless.vertexshader">
       <Filter>Header Files</Filter>
     </None>
+    <None Include="cube.inl">
+      <Filter>Header Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -15,6 +15,9 @@
 
 #include "OBJparser.h"
 
+// Testing generated arrays in inl file.
+#include "cube.inl"
+
 namespace {
 	GLuint programID;
 	GLuint programID2;
@@ -72,7 +75,7 @@ void InitObject(){
 	M_MatrixID = glGetUniformLocation(programID, "M");
 	L_VecID = glGetUniformLocation(programID, "L");
 	
-	res.loadOBJ("cube.obj", vertices, uvs, normals, tangents, bitangents, true);
+	res.loadOBJ("torusUvmapped.obj", vertices, uvs, normals, tangents, bitangents, false);
 
 	glGenBuffers(1, &vertexbuffer);
 	glGenBuffers(1, &uvbuffer);
@@ -187,14 +190,20 @@ void DrawObject(float x, float y, float z, float rotation, glm::vec3 rotationaxe
 	glDisableVertexAttribArray(4);
 }
 
+// Testing generated inl file. TODO: Remove center vertex (0 , 0)...
 void InitLightPoint()
 {
-	res.loadOBJ("cube.obj", vertices2, uvs, normals, tangents, bitangents, false);
+	// Use this to generate inl cube.
+	//res.loadOBJ("cube.obj", vertices2, uvs, normals, tangents, bitangents, true);
 
 	glGenBuffers(1, &vertexbuffer2);
 
+	//glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer2);
+	//glBufferData(GL_ARRAY_BUFFER, vertices2.size() * sizeof(glm::vec3), &vertices2[0], GL_STATIC_DRAW);
+
+	glGenBuffers(1, &vertexbuffer2);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer2);
-	glBufferData(GL_ARRAY_BUFFER, vertices2.size() * sizeof(glm::vec3), &vertices2[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertices), &Vertices[0], GL_STATIC_DRAW);
 
 	programID2 = LoadShaders("Shadeless.vertexshader", "Shadeless.fragmentshader");
 	MVP_MatrixID2 = glGetUniformLocation(programID2, "MVP");
@@ -221,7 +230,9 @@ void DrawLightPoint(glm::vec3 position)
 		(void*)0 // array buffer offset
 		);
 
-	glDrawArrays(GL_TRIANGLES, 0, vertices2.size());
+	//glDrawArrays(GL_POINTS, 0, vertices2.size());
+	glDrawArrays(GL_LINE_LOOP, 0, sizeof(Vertices));
+
 
 	glDisableVertexAttribArray(0);
 }

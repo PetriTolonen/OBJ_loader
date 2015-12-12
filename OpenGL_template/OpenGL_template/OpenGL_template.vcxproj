@@ -98,6 +98,7 @@
     <ClInclude Include="vertexshader.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="cube.inl" />
     <None Include="FragmentShader.fragmentshader" />
     <None Include="Shadeless.fragmentshader" />
     <None Include="Shadeless.vertexshader" />
