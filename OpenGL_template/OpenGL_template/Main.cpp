@@ -196,11 +196,11 @@ void DrawObject(glm::vec3 position, float rotation, glm::vec3 rotationaxel){
 void InitLightPoint()
 {
 	// Use this atleast once to generate inl object.
-	res.loadOBJ("uvpointball.obj", vertices2, uvs, normals, tangents, bitangents, true);
+	//res.loadOBJ("futball.obj", vertices2, uvs, normals, tangents, bitangents, true);
 
 	glGenBuffers(1, &vertexbuffer2);
 
-	// If using the data from vertices2
+	// If using the data from vertices2, change also the glDrawArrays
 	//glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer2);
 	//glBufferData(GL_ARRAY_BUFFER, vertices2.size() * sizeof(glm::vec3), &vertices2[0], GL_STATIC_DRAW);
 
@@ -209,7 +209,7 @@ void InitLightPoint()
 
 	glGenBuffers(1, &vertexbuffer2);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer2);
-	glBufferData(GL_ARRAY_BUFFER, v.size(), &Vertices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, v.size()* sizeof(glm::vec3), &Vertices[0], GL_STATIC_DRAW);
 
 	// Light cube doesnt need uvs, normals... These are for testing
 	/*glBindBuffer(GL_ARRAY_BUFFER, uvbuffer2);
@@ -250,7 +250,7 @@ void DrawLightPoint(glm::vec3 position, float rotation, glm::vec3 rotationaxel)
 		);
 
 	//glDrawArrays(GL_TRIANGLES, 0, vertices2.size());
-	glDrawArrays(GL_POINTS, 0, sizeOfVArray / 3);
+	glDrawArrays(GL_LINE_LOOP, 0, sizeOfVArray / 3);
 
 	glDisableVertexAttribArray(0);
 }
