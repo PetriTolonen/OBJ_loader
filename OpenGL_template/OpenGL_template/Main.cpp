@@ -27,6 +27,9 @@ namespace {
 	GLuint tangentbuffer;
 	GLuint bitangentbuffer;
 
+	GLuint uvbuffer;
+	GLuint uvbuffer2;
+
 	GLuint VertexArrayID; 
 	GLuint indexbuffer;
 	GLFWwindow* window;
@@ -53,7 +56,7 @@ namespace {
 	GLuint Normal_mapID;
 	GLuint Diffuse_mapID;
 	GLuint colorbuffer;
-	GLuint uvbuffer;
+	
 	GLuint normal_map;
 	GLuint diffuse_map;
 	int numberofind = 0;
@@ -212,10 +215,13 @@ void InitLightPoint()
 	glBufferData(GL_ARRAY_BUFFER, v.size()* sizeof(glm::vec3), &Vertices[0], GL_STATIC_DRAW);
 
 	// Light cube doesnt need uvs, normals... These are for testing
-	/*glBindBuffer(GL_ARRAY_BUFFER, uvbuffer2);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(Uvs), &Uvs[0], GL_STATIC_DRAW);
 
-	glBindBuffer(GL_ARRAY_BUFFER, normalbuffer2);
+	/*int sizeOfUArray = sizeof(Uvs) / sizeof(*Uvs);
+	glGenBuffers(1, &uvbuffer2);
+	glBindBuffer(GL_ARRAY_BUFFER, uvbuffer2);
+	glBufferData(GL_ARRAY_BUFFER, sizeOfUArray*sizeof(glm::vec2), &Uvs[0], GL_STATIC_DRAW);*/
+
+	/*glBindBuffer(GL_ARRAY_BUFFER, normalbuffer2);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(Normals), &Normals[0], GL_STATIC_DRAW);
 
 	glBindBuffer(GL_ARRAY_BUFFER, tangentbuffer2);
@@ -249,8 +255,19 @@ void DrawLightPoint(glm::vec3 position, float rotation, glm::vec3 rotationaxel)
 		(void*)0 // array buffer offset
 		);
 
+	//glEnableVertexAttribArray(1);
+	//glBindBuffer(GL_ARRAY_BUFFER, uvbuffer2);
+	//glVertexAttribPointer(
+	//	TEXTURE_DATA,                               // attribute. No particular reason for 1, but must match the layout in the shader.
+	//	2,
+	//	GL_FLOAT,                         // type
+	//	GL_FALSE,                         // normalized?
+	//	0,                                // stride
+	//	(void*)0                          // array buffer offset
+	//	);
+
 	//glDrawArrays(GL_TRIANGLES, 0, vertices2.size());
-	glDrawArrays(GL_LINE_LOOP, 0, sizeOfVArray / 3);
+	glDrawArrays(GL_TRIANGLES, 0, sizeOfVArray / 3);
 
 	glDisableVertexAttribArray(0);
 }

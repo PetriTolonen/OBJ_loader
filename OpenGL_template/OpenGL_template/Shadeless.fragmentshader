@@ -1,5 +1,6 @@
 #version 330 core
 
+in vec2 UV;
 /*system inputs
 in vec4 gl_FragCoord;
 in bool gl_FrontFacing;
@@ -8,5 +9,9 @@ in vec2 gl_PointCoord;
 out vec4 FragColor; // Output data
 
 void main(){
+  //float mx = mod( UV.x + 0.5*floor(UV.y/0.1), 0.33);
+  //float my = mod( UV.y, 0.1);
+  //if((mx>0.033) && (my>0.033)) { FragColor = vec4(1.0,1.0,1.0,1.0); }
+  //else { FragColor = vec4(0.7,0.6,0.1,1.0); }
   FragColor = vec4(1.0);
 }
