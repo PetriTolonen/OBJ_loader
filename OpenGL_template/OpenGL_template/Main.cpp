@@ -195,7 +195,7 @@ void DrawObject(glm::vec3 position, float rotation, glm::vec3 rotationaxel){
 	glDisableVertexAttribArray(4);
 }
 
-// Testing generated inl file.
+// Testing generated inl file. (inls used in android project...)
 void InitLightPoint()
 {
 	// Use this atleast once to generate inl object.
@@ -207,14 +207,12 @@ void InitLightPoint()
 	//glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer2);
 	//glBufferData(GL_ARRAY_BUFFER, vertices2.size() * sizeof(glm::vec3), &vertices2[0], GL_STATIC_DRAW);
 
-	std::vector<float> v(std::begin(Vertices), std::end(Vertices));
-	sizeOfVArray = v.size();
-
+	sizeOfVArray = (sizeof(Vertices) / sizeof(*Vertices))/3;
 	glGenBuffers(1, &vertexbuffer2);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer2);
-	glBufferData(GL_ARRAY_BUFFER, v.size()* sizeof(glm::vec3), &Vertices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeOfVArray* sizeof(glm::vec3), &Vertices[0], GL_STATIC_DRAW);
 
-	// Light cube doesnt need uvs, normals... These are for testing
+	// Light obj doesnt need uvs, normals... These are for testing
 
 	/*int sizeOfUArray = sizeof(Uvs) / sizeof(*Uvs);
 	glGenBuffers(1, &uvbuffer2);
@@ -236,7 +234,7 @@ void InitLightPoint()
 void DrawLightPoint(glm::vec3 position, float rotation, glm::vec3 rotationaxel)
 {
 	glEnable(GL_BLEND);
-
+	
 	glUseProgram(programID2);
 
 	M = glm::translate(position)*glm::rotate(rotation, rotationaxel);;
@@ -267,7 +265,7 @@ void DrawLightPoint(glm::vec3 position, float rotation, glm::vec3 rotationaxel)
 	//	);
 
 	//glDrawArrays(GL_TRIANGLES, 0, vertices2.size());
-	glDrawArrays(GL_TRIANGLES, 0, sizeOfVArray / 3);
+	glDrawArrays(GL_TRIANGLES, 0, sizeOfVArray);
 
 	glDisableVertexAttribArray(0);
 }
