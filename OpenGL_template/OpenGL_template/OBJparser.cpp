@@ -153,6 +153,14 @@ bool OBJparser::loadOBJ(const char * path, std::vector<glm::vec3> &out_vertices,
 			outPutData << out_bitangents[i].x << " , " << out_bitangents[i].y << " , " << out_bitangents[i].z << " , " << std::endl;
 		}
 		outPutData << "};\n";
+
+		outPutData << "uint16_t Indices[" << vertexIndices.size() << "] = {\n";
+		for (int i = 0; i < vertexIndices.size(); i++)
+		{
+			outPutData << vertexIndices[i] << " , " << std::endl;
+		}
+		outPutData << "};\n";
+
 		outPutData.close();
 	}
 }

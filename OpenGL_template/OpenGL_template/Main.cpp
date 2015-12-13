@@ -223,7 +223,7 @@ void DrawObject(glm::vec3 position, float rotation, glm::vec3 rotationaxel){
 void InitLightPoint()
 {
 	// Use true on this atleast once to generate inl object.
-	res.loadOBJ("uvpointball.obj", vertices2, uvs, normals, tangents, bitangents, false);
+	res.loadOBJ("uvsphere.obj", vertices2, uvs, normals, tangents, bitangents, false);
 
 	glGenBuffers(1, &vertexbuffer2);
 
@@ -292,6 +292,8 @@ void DrawLightPoint(glm::vec3 position, float rotation, glm::vec3 rotationaxel)
 	//glDrawArrays(GL_TRIANGLES, 0, sizeOfVArray);
 
 	glDisableVertexAttribArray(0);
+
+	//glDrawElements(GL_TRIANGLES, sizeOfVArray, GL_UNSIGNED_SHORT, Indices);
 }
 
 void Init(void) {
