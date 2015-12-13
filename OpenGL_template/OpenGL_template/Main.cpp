@@ -113,8 +113,8 @@ void InitObject(){
 	glGenTextures(1, &diffuse_map);
 
 	float pixels[] = {
-		0.5f, 0.5f, 0.5f, 1.0f, 1.0f, 1.0f,
-		1.0f, 1.0f, 1.0f, 0.5f, 0.5f, 0.5f
+		1.0f, 0.5f, 0.1f, 0.6f, 0.7f, 1.0f,
+		0.5f, 1.0f, 1.0f, 1.0f, 0.5f, 0.1f
 	};
 	glActiveTexture(GL_TEXTURE1);
 	
@@ -130,8 +130,8 @@ void InitObject(){
 		GL_FLOAT,
 		pixels);
 	
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 }
 void DrawObject(glm::vec3 position, float rotation, glm::vec3 rotationaxel){
 	glEnable(GL_BLEND);
@@ -250,7 +250,7 @@ void InitLightPoint()
 
 	glBindBuffer(GL_ARRAY_BUFFER, bitangentbuffer2);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(Bitangents), &Bitangents[0], GL_STATIC_DRAW);*/
-
+	
 	programID2 = LoadShaders("Shadeless.vertexshader", "Shadeless.fragmentshader");
 	MVP_MatrixID2 = glGetUniformLocation(programID2, "MVP");
 }
