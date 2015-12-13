@@ -108,7 +108,30 @@ void InitObject(){
 	normal_map = loadBMP_custom("./torusnormal.bmp");
 
 	Diffuse_mapID = glGetUniformLocation(programID, "rockwall_diffuse");
-	diffuse_map = loadBMP_custom("./uvtemplate.bmp");
+	//diffuse_map = loadBMP_custom("./uvtemplate.bmp");
+
+	glGenTextures(1, &diffuse_map);
+
+	float pixels[] = {
+		0.5f, 0.5f, 0.5f, 1.0f, 1.0f, 1.0f,
+		1.0f, 1.0f, 1.0f, 0.5f, 0.5f, 0.5f
+	};
+	glActiveTexture(GL_TEXTURE1);
+	
+	glBindTexture(GL_TEXTURE_2D, diffuse_map);	
+
+	glTexImage2D(GL_TEXTURE_2D,
+		0,
+		GL_RGB,
+		2,
+		2,
+		0,
+		GL_RGB,
+		GL_FLOAT,
+		pixels);
+	
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 }
 void DrawObject(glm::vec3 position, float rotation, glm::vec3 rotationaxel){
 	glEnable(GL_BLEND);
@@ -199,7 +222,7 @@ void DrawObject(glm::vec3 position, float rotation, glm::vec3 rotationaxel){
 void InitLightPoint()
 {
 	// Use this atleast once to generate inl object.
-	//res.loadOBJ("futball.obj", vertices2, uvs, normals, tangents, bitangents, true);
+	res.loadOBJ("rockwall.obj", vertices2, uvs, normals, tangents, bitangents, true);
 
 	glGenBuffers(1, &vertexbuffer2);
 
