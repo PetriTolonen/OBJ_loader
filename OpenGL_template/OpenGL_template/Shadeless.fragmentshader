@@ -1,6 +1,6 @@
 #version 330 core
 
-in vec2 UV;
+//in vec2 UV;
 /*system inputs
 in vec4 gl_FragCoord;
 in bool gl_FrontFacing;

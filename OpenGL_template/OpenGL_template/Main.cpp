@@ -108,9 +108,10 @@ void InitObject(){
 	normal_map = loadBMP_custom("./torusnormal.bmp");
 
 	Diffuse_mapID = glGetUniformLocation(programID, "rockwall_diffuse");
-	//diffuse_map = loadBMP_custom("./uvtemplate.bmp");
+	diffuse_map = loadBMP_custom("./uvtemplate.bmp");
 
-	glGenTextures(1, &diffuse_map);
+	// Generating color texture test.
+	/*glGenTextures(1, &diffuse_map);
 
 	float pixels[] = {
 		1.0f, 0.5f, 0.1f, 0.6f, 0.7f, 1.0f,
@@ -131,7 +132,7 @@ void InitObject(){
 		pixels);
 	
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);*/
 }
 void DrawObject(glm::vec3 position, float rotation, glm::vec3 rotationaxel){
 	glEnable(GL_BLEND);
@@ -221,26 +222,26 @@ void DrawObject(glm::vec3 position, float rotation, glm::vec3 rotationaxel){
 // Testing generated inl file. (inls used in android project...)
 void InitLightPoint()
 {
-	// Use this atleast once to generate inl object.
-	res.loadOBJ("rockwall.obj", vertices2, uvs, normals, tangents, bitangents, true);
+	// Use true on this atleast once to generate inl object.
+	res.loadOBJ("uvpointball.obj", vertices2, uvs, normals, tangents, bitangents, false);
 
 	glGenBuffers(1, &vertexbuffer2);
 
 	// If using the data from vertices2, change also the glDrawArrays
-	//glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer2);
-	//glBufferData(GL_ARRAY_BUFFER, vertices2.size() * sizeof(glm::vec3), &vertices2[0], GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer2);
+	glBufferData(GL_ARRAY_BUFFER, vertices2.size() * sizeof(glm::vec3), &vertices2[0], GL_STATIC_DRAW);
 
-	sizeOfVArray = (sizeof(Vertices) / sizeof(*Vertices))/3;
+	/*sizeOfVArray = (sizeof(Vertices) / sizeof(*Vertices))/3;
 	glGenBuffers(1, &vertexbuffer2);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer2);
-	glBufferData(GL_ARRAY_BUFFER, sizeOfVArray* sizeof(glm::vec3), &Vertices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeOfVArray* sizeof(glm::vec3), &Vertices[0], GL_STATIC_DRAW);*/
 
 	// Light obj doesnt need uvs, normals... These are for testing
 
-	int sizeOfUArray = (sizeof(Uvs) / sizeof(*Uvs))/2;
+	/*int sizeOfUArray = (sizeof(Uvs) / sizeof(*Uvs))/2;
 	glGenBuffers(1, &uvbuffer2);
 	glBindBuffer(GL_ARRAY_BUFFER, uvbuffer2);
-	glBufferData(GL_ARRAY_BUFFER, sizeOfUArray*sizeof(glm::vec2), &Uvs[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeOfUArray*sizeof(glm::vec2), &Uvs[0], GL_STATIC_DRAW);*/
 
 	/*glBindBuffer(GL_ARRAY_BUFFER, normalbuffer2);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(Normals), &Normals[0], GL_STATIC_DRAW);
@@ -276,19 +277,19 @@ void DrawLightPoint(glm::vec3 position, float rotation, glm::vec3 rotationaxel)
 		(void*)0 // array buffer offset
 		);
 
-	glEnableVertexAttribArray(1);
-	glBindBuffer(GL_ARRAY_BUFFER, uvbuffer2);
-	glVertexAttribPointer(
-		TEXTURE_DATA,                               // attribute. No particular reason for 1, but must match the layout in the shader.
-		2,
-		GL_FLOAT,                         // type
-		GL_FALSE,                         // normalized?
-		0,                                // stride
-		(void*)0                          // array buffer offset
-		);
+	//glEnableVertexAttribArray(1);
+	//glBindBuffer(GL_ARRAY_BUFFER, uvbuffer2);
+	//glVertexAttribPointer(
+	//	TEXTURE_DATA,                               // attribute. No particular reason for 1, but must match the layout in the shader.
+	//	2,
+	//	GL_FLOAT,                         // type
+	//	GL_FALSE,                         // normalized?
+	//	0,                                // stride
+	//	(void*)0                          // array buffer offset
+	//	);
 
-	//glDrawArrays(GL_TRIANGLES, 0, vertices2.size());
-	glDrawArrays(GL_TRIANGLES, 0, sizeOfVArray);
+	glDrawArrays(GL_TRIANGLES, 0, vertices2.size());
+	//glDrawArrays(GL_TRIANGLES, 0, sizeOfVArray);
 
 	glDisableVertexAttribArray(0);
 }
