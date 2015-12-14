@@ -221,23 +221,23 @@ void DrawObject(glm::vec3 position, float rotation, glm::vec3 rotationaxel){
 // Testing generated inl file. (inls used in android project...)
 void InitLightPoint()
 {
-	// Use true on this atleast once to generate inl object.
-	//res.loadOBJ("uvsphere.obj", vertices2, uvs, normals, tangents, bitangents, true);
+	// Use true on this atleast once to generate inl object if needed for another program.
+	res.loadOBJ("uvsphere.obj", vertices2, uvs, normals, tangents, bitangents, false);
 
 	glGenBuffers(1, &vertexbuffer2);
 
-	//// If using the data from vertices2, change also the glDrawArrays
-	//glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer2);
-	//glBufferData(GL_ARRAY_BUFFER, vertices2.size() * sizeof(glm::vec3), &vertices2[0], GL_STATIC_DRAW);
+	// If using the data from vertices2, change also the glDrawArrays
+	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer2);
+	glBufferData(GL_ARRAY_BUFFER, vertices2.size() * sizeof(glm::vec3), &vertices2[0], GL_STATIC_DRAW);
 
-	sizeOfVArray = (sizeof(Vertices) / sizeof(*Vertices))/3;
+	/*sizeOfVArray = (sizeof(Vertices) / sizeof(*Vertices))/3;
 	glGenBuffers(1, &vertexbuffer2);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer2);
-	glBufferData(GL_ARRAY_BUFFER, sizeOfVArray* sizeof(glm::vec3), &Vertices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeOfVArray* sizeof(glm::vec3), &Vertices[0], GL_STATIC_DRAW);*/
 
 	// Light obj doesnt need uvs, normals... These are for testing
 
-	int sizeOfUArray = (sizeof(Uvs) / sizeof(*Uvs))/2;
+	/*int sizeOfUArray = (sizeof(Uvs) / sizeof(*Uvs))/2;
 	glGenBuffers(1, &uvbuffer2);
 	glBindBuffer(GL_ARRAY_BUFFER, uvbuffer2);
 	glBufferData(GL_ARRAY_BUFFER, sizeOfUArray*sizeof(glm::vec2), &Uvs[0], GL_STATIC_DRAW);
@@ -245,7 +245,7 @@ void InitLightPoint()
 	int sizeOfNArray = (sizeof(Normals) / sizeof(*Normals)) / 3;
 	glGenBuffers(1, &normalbuffer2);
 	glBindBuffer(GL_ARRAY_BUFFER, normalbuffer2);
-	glBufferData(GL_ARRAY_BUFFER, sizeOfNArray*sizeof(glm::vec3), &Normals[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeOfNArray*sizeof(glm::vec3), &Normals[0], GL_STATIC_DRAW);*/
 
 	//glBindBuffer(GL_ARRAY_BUFFER, tangentbuffer2);
 	//glBufferData(GL_ARRAY_BUFFER, sizeof(Tangents), &Tangents[0], GL_STATIC_DRAW);
@@ -278,34 +278,34 @@ void DrawLightPoint(glm::vec3 position, float rotation, glm::vec3 rotationaxel)
 		(void*)0 // array buffer offset
 		);
 
-	glEnableVertexAttribArray(1);
-	glBindBuffer(GL_ARRAY_BUFFER, uvbuffer2);
-	glVertexAttribPointer(
-		TEXTURE_DATA,                               // attribute. No particular reason for 1, but must match the layout in the shader.
-		2,
-		GL_FLOAT,                         // type
-		GL_FALSE,                         // normalized?
-		0,                                // stride
-		(void*)0                          // array buffer offset
-		);
+	//glEnableVertexAttribArray(1);
+	//glBindBuffer(GL_ARRAY_BUFFER, uvbuffer2);
+	//glVertexAttribPointer(
+	//	TEXTURE_DATA,                               // attribute. No particular reason for 1, but must match the layout in the shader.
+	//	2,
+	//	GL_FLOAT,                         // type
+	//	GL_FALSE,                         // normalized?
+	//	0,                                // stride
+	//	(void*)0                          // array buffer offset
+	//	);
 
-	glEnableVertexAttribArray(2);
-	glBindBuffer(GL_ARRAY_BUFFER, normalbuffer2);
-	glVertexAttribPointer(
-		NORMAL_DATA,                               // attribute. No particular reason for 1, but must match the layout in the shader.
-		3,
-		GL_FLOAT,                         // type
-		GL_FALSE,                         // normalized?
-		0,                                // stride
-		(void*)0                          // array buffer offset
-		);
+	//glEnableVertexAttribArray(2);
+	//glBindBuffer(GL_ARRAY_BUFFER, normalbuffer2);
+	//glVertexAttribPointer(
+	//	NORMAL_DATA,                               // attribute. No particular reason for 1, but must match the layout in the shader.
+	//	3,
+	//	GL_FLOAT,                         // type
+	//	GL_FALSE,                         // normalized?
+	//	0,                                // stride
+	//	(void*)0                          // array buffer offset
+	//	);
 
-	/*glDrawArrays(GL_TRIANGLES, 0, vertices2.size());*/
-	glDrawArrays(GL_TRIANGLES, 0, sizeOfVArray);
+	glDrawArrays(GL_TRIANGLES, 0, vertices2.size());
+	/*glDrawArrays(GL_TRIANGLES, 0, sizeOfVArray);*/
 
 	glDisableVertexAttribArray(0);
-	glDisableVertexAttribArray(1);
-	glDisableVertexAttribArray(2);
+	//glDisableVertexAttribArray(1);
+	//glDisableVertexAttribArray(2);
 
 	//glDrawElements(GL_TRIANGLES, sizeOfVArray, GL_UNSIGNED_SHORT, Indices);
 }

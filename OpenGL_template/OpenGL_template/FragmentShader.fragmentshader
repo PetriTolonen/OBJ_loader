@@ -33,5 +33,4 @@ void main(){
   vec3 diffuse = diff * color;
 
   FragColor = vec4(diffuse*attenuation + ambient*attenuation, 1.0);
-  FragColor.a = 1.0;
 }
