@@ -136,8 +136,6 @@ void InitObject(){
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);*/
 }
 void DrawObject(glm::vec3 position, float rotation, glm::vec3 rotationaxel){
-	glEnable(GL_BLEND);
-
 	glUseProgram(programID);
 
 	glActiveTexture(GL_TEXTURE0);
@@ -224,7 +222,7 @@ void DrawObject(glm::vec3 position, float rotation, glm::vec3 rotationaxel){
 void InitLightPoint()
 {
 	// Use true on this atleast once to generate inl object.
-	//res.loadOBJ("uvsphere.obj", vertices2, uvs, normals, tangents, bitangents, false);
+	//res.loadOBJ("uvsphere.obj", vertices2, uvs, normals, tangents, bitangents, true);
 
 	glGenBuffers(1, &vertexbuffer2);
 
@@ -320,7 +318,7 @@ void Init(void) {
 	glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 	glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
-	P = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.f);
+	P = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 1000.f);
 	V = glm::lookAt(cameraPos, cameraPos+cameraFront, cameraUp);
 
 	VP = P*V;
@@ -331,9 +329,8 @@ void Init(void) {
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
-void Render(void) {
+void Render(void) {	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	
 	alpha += 0.005;
 
 	L = glm::vec3(4.0f, 4.0f, (-7.0f + 14.0f * glm::cos(alpha))); //Light position
@@ -387,6 +384,8 @@ int main(void) {
 	glFrontFace(GL_CCW);
 	glCullFace(GL_BACK);
 	glEnable(GL_CULL_FACE);
+
+	glEnable(GL_BLEND);
 
 	glewExperimental = true; // Needed for core profile
 	if (glewInit() != GLEW_OK) {

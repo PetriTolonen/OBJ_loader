@@ -14,6 +14,6 @@ void main(){
   //float my = mod( UV.y, 0.1);
   //if((mx>0.033) && (my>0.033)) { FragColor = vec4(1.0,1.0,1.0,1.0); }
   //else { FragColor = vec4(0.7,0.6,0.1,1.0); }
-  //FragColor = vec4(1.0);
-  FragColor = vec4(normal, 1);
+  FragColor = vec4(1.0);
+  //FragColor = vec4(normal, 1);
 }
