@@ -224,7 +224,7 @@ void DrawObject(glm::vec3 position, float rotation, glm::vec3 rotationaxel){
 void InitLightPoint()
 {
 	// Use true on this atleast once to generate inl object.
-	res.loadOBJ("uvsphere.obj", vertices2, uvs, normals, tangents, bitangents, false);
+	//res.loadOBJ("uvsphere.obj", vertices2, uvs, normals, tangents, bitangents, false);
 
 	glGenBuffers(1, &vertexbuffer2);
 
@@ -384,7 +384,9 @@ int main(void) {
 	}
 	glfwMakeContextCurrent(window);
 	
-	//framebuffer....
+	glFrontFace(GL_CCW);
+	glCullFace(GL_BACK);
+	glEnable(GL_CULL_FACE);
 
 	glewExperimental = true; // Needed for core profile
 	if (glewInit() != GLEW_OK) {
