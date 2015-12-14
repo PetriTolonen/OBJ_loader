@@ -336,7 +336,7 @@ void Render(void) {
 	L = glm::vec3(4.0f, 4.0f, (-7.0f + 14.0f * glm::cos(alpha))); //Light position
 	DrawLightPoint(L /*glm::vec3(2.0f, 0.0f,0.0f)*/, alpha, glm::vec3(0.0f, 0.0f, 1.0f));
 
-	for (int i = 0; i < 1000; i++)
+	for (int i = 0; i < 80; i++)
 	{
 		DrawObject(glm::vec3(((i*i) / 40.0f) * glm::sin(alpha) * 1.2f + i*0.7f, (((i*i) / 20.0f) * glm::cos(alpha) * 0.6f), (-i  * 3.0f)), (i+1) * alpha, glm::vec3(0.0f, 1.0f, 1.0f));
 	}	
