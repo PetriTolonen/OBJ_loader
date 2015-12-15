@@ -111,29 +111,29 @@ void InitObject(){
 	Diffuse_mapID = glGetUniformLocation(programID, "rockwall_diffuse");
 	diffuse_map = loadBMP_custom("./uvtemplate.bmp");
 
-	// Generating color texture test.
-	/*glGenTextures(1, &diffuse_map);
+	//// Generating color texture test.
+	//glGenTextures(1, &diffuse_map);
 
-	float pixels[] = {
-		1.0f, 0.5f, 0.1f, 0.6f, 0.7f, 1.0f,
-		0.5f, 1.0f, 1.0f, 1.0f, 0.5f, 0.1f
-	};
-	glActiveTexture(GL_TEXTURE1);
-	
-	glBindTexture(GL_TEXTURE_2D, diffuse_map);	
+	//unsigned char pixels[] = {
+	//	255, 255, 255, 255, 255, 255,
+	//	255, 255, 255, 255, 255, 255
+	//};
+	//glActiveTexture(GL_TEXTURE1);
+	//
+	//glBindTexture(GL_TEXTURE_2D, diffuse_map);	
 
-	glTexImage2D(GL_TEXTURE_2D,
-		0,
-		GL_RGB,
-		2,
-		2,
-		0,
-		GL_RGB,
-		GL_FLOAT,
-		pixels);
-	
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);*/
+	//glTexImage2D(GL_TEXTURE_2D,
+	//	0,
+	//	GL_RGB,
+	//	2,
+	//	2,
+	//	0,
+	//	GL_RGB,
+	//	GL_UNSIGNED_BYTE,
+	//	pixels);
+	//
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 }
 void DrawObject(glm::vec3 position, float rotation, glm::vec3 rotationaxel){
 	glUseProgram(programID);
